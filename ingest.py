@@ -15,6 +15,7 @@ This script demonstrates the complete ingestion pipeline:
 from pathlib import Path
 import hashlib
 import frontmatter
+import json
 from langchain_text_splitters import MarkdownHeaderTextSplitter
 
 
@@ -135,7 +136,8 @@ def prepare_texts(chunks):
     texts = []
 
     for chunk in chunks:
-        embedding_text = f"""
+
+        chunk["embedding_text"] = f"""
 Title: {chunk['title']}
 Category: {chunk['category']}
 Section: {chunk.get('header2') or chunk.get('header1')}
@@ -144,11 +146,27 @@ Content:
 {chunk['text']}
 """.strip()
 
-        texts.append(embedding_text)
-
-    return texts
+    return chunks
 
 
+# ==========================================================
+# STEP 6 — Save Processed Chunks
+# ==========================================================
+
+OUTPUT_FILE = Path("processed_chunks.json")
+
+
+def save_processed_chunks(chunks, output_file=OUTPUT_FILE):
+    """
+    Save processed chunks to a JSON file.
+
+    This file will be the input to embeddings.py.
+    """
+
+    with open(output_file, "w", encoding="utf-8") as f:
+        json.dump(chunks, f, indent=2, ensure_ascii=False)
+
+    print(f"Saved {len(chunks)} chunks to {output_file}")
 
 # ==========================================================
 # MAIN PIPELINE
@@ -165,8 +183,12 @@ def main():
     print(f"Created {len(chunks)} chunks")
 
     print("Preparing text for embeddings...")
-    texts = prepare_texts(chunks)
-    print(f"Prepared {len(texts)} chunks for embedding")
+    chunks = prepare_texts(chunks)
+
+    print("Saving processed chunks...")
+    save_processed_chunks(chunks)
+
+    print("Ingestion complete!")
 
 
 

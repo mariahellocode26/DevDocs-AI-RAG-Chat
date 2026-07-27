@@ -1,0 +1,1635 @@
+[
+  {
+    "id": "c3328abc23c57566db55a2819ec446a8",
+    "filename": "streaming.md",
+    "title": "Streaming",
+    "category": "Advanced Features",
+    "audience": "Developers",
+    "topics": [
+      "streaming",
+      "real-time responses",
+      "latency",
+      "user experience"
+    ],
+    "related": [
+      "responses-api.md",
+      "function-calling.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Streaming",
+    "header2": "Overview",
+    "header3": null,
+    "text": "Streaming allows an application to receive a model's output incrementally instead of waiting for the complete response. This improves perceived responsiveness and provides a better user experience for longer generations.",
+    "embedding_text": "Title: Streaming\nCategory: Advanced Features\nSection: Overview\n\nContent:\nStreaming allows an application to receive a model's output incrementally instead of waiting for the complete response. This improves perceived responsiveness and provides a better user experience for longer generations."
+  },
+  {
+    "id": "cbe4b9d749778bc721ad5c861e4ba775",
+    "filename": "streaming.md",
+    "title": "Streaming",
+    "category": "Advanced Features",
+    "audience": "Developers",
+    "topics": [
+      "streaming",
+      "real-time responses",
+      "latency",
+      "user experience"
+    ],
+    "related": [
+      "responses-api.md",
+      "function-calling.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Streaming",
+    "header2": "Why Use Streaming?",
+    "header3": null,
+    "text": "Streaming is useful when:  \n- Responses are long.\n- Low perceived latency is important.\n- Building chat applications.\n- Displaying generated text as it arrives.",
+    "embedding_text": "Title: Streaming\nCategory: Advanced Features\nSection: Why Use Streaming?\n\nContent:\nStreaming is useful when:  \n- Responses are long.\n- Low perceived latency is important.\n- Building chat applications.\n- Displaying generated text as it arrives."
+  },
+  {
+    "id": "4ab2352b6bc925a4d2e3abb05c6b8f19",
+    "filename": "streaming.md",
+    "title": "Streaming",
+    "category": "Advanced Features",
+    "audience": "Developers",
+    "topics": [
+      "streaming",
+      "real-time responses",
+      "latency",
+      "user experience"
+    ],
+    "related": [
+      "responses-api.md",
+      "function-calling.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Streaming",
+    "header2": "Basic Example",
+    "header3": null,
+    "text": "```python\nfrom openai import OpenAI\n\nclient = OpenAI()\n\nstream = client.responses.create(\nmodel=\"gpt-5\",\ninput=\"Write a short story about space.\",\nstream=True\n)\n\nfor event in stream:\nprint(event)\n```",
+    "embedding_text": "Title: Streaming\nCategory: Advanced Features\nSection: Basic Example\n\nContent:\n```python\nfrom openai import OpenAI\n\nclient = OpenAI()\n\nstream = client.responses.create(\nmodel=\"gpt-5\",\ninput=\"Write a short story about space.\",\nstream=True\n)\n\nfor event in stream:\nprint(event)\n```"
+  },
+  {
+    "id": "1c3557359e41dc3488fa44aa7af23df7",
+    "filename": "streaming.md",
+    "title": "Streaming",
+    "category": "Advanced Features",
+    "audience": "Developers",
+    "topics": [
+      "streaming",
+      "real-time responses",
+      "latency",
+      "user experience"
+    ],
+    "related": [
+      "responses-api.md",
+      "function-calling.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Streaming",
+    "header2": "Typical Streaming Flow",
+    "header3": null,
+    "text": "```text\nUser Request\n│\n▼\nResponses API\n│\n▼\nToken 1\nToken 2\nToken 3\n...\nFinal Response\n```",
+    "embedding_text": "Title: Streaming\nCategory: Advanced Features\nSection: Typical Streaming Flow\n\nContent:\n```text\nUser Request\n│\n▼\nResponses API\n│\n▼\nToken 1\nToken 2\nToken 3\n...\nFinal Response\n```"
+  },
+  {
+    "id": "2dbe4d3f9ce1ddac9fd74393a6736048",
+    "filename": "streaming.md",
+    "title": "Streaming",
+    "category": "Advanced Features",
+    "audience": "Developers",
+    "topics": [
+      "streaming",
+      "real-time responses",
+      "latency",
+      "user experience"
+    ],
+    "related": [
+      "responses-api.md",
+      "function-calling.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Streaming",
+    "header2": "Handling Events",
+    "header3": null,
+    "text": "Applications typically:  \n1. Open a streaming connection.\n2. Process incoming events.\n3. Append new text to the UI.\n4. Detect completion.\n5. Close the stream.",
+    "embedding_text": "Title: Streaming\nCategory: Advanced Features\nSection: Handling Events\n\nContent:\nApplications typically:  \n1. Open a streaming connection.\n2. Process incoming events.\n3. Append new text to the UI.\n4. Detect completion.\n5. Close the stream."
+  },
+  {
+    "id": "a3080a631f27a2d55906d89bb075f615",
+    "filename": "streaming.md",
+    "title": "Streaming",
+    "category": "Advanced Features",
+    "audience": "Developers",
+    "topics": [
+      "streaming",
+      "real-time responses",
+      "latency",
+      "user experience"
+    ],
+    "related": [
+      "responses-api.md",
+      "function-calling.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Streaming",
+    "header2": "Best Practices",
+    "header3": null,
+    "text": "- Update the UI incrementally.\n- Handle interruptions gracefully.\n- Show a loading indicator before the first token.\n- Close streams when complete.",
+    "embedding_text": "Title: Streaming\nCategory: Advanced Features\nSection: Best Practices\n\nContent:\n- Update the UI incrementally.\n- Handle interruptions gracefully.\n- Show a loading indicator before the first token.\n- Close streams when complete."
+  },
+  {
+    "id": "6ba6ee36c83257a80572673ba344b37f",
+    "filename": "streaming.md",
+    "title": "Streaming",
+    "category": "Advanced Features",
+    "audience": "Developers",
+    "topics": [
+      "streaming",
+      "real-time responses",
+      "latency",
+      "user experience"
+    ],
+    "related": [
+      "responses-api.md",
+      "function-calling.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Streaming",
+    "header2": "Common Mistakes",
+    "header3": null,
+    "text": "- Assuming the full response arrives in one event.\n- Ignoring connection errors.\n- Blocking the UI while waiting for tokens.",
+    "embedding_text": "Title: Streaming\nCategory: Advanced Features\nSection: Common Mistakes\n\nContent:\n- Assuming the full response arrives in one event.\n- Ignoring connection errors.\n- Blocking the UI while waiting for tokens."
+  },
+  {
+    "id": "2fd2fcdebc1791c0bbaf0d27659f246b",
+    "filename": "streaming.md",
+    "title": "Streaming",
+    "category": "Advanced Features",
+    "audience": "Developers",
+    "topics": [
+      "streaming",
+      "real-time responses",
+      "latency",
+      "user experience"
+    ],
+    "related": [
+      "responses-api.md",
+      "function-calling.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Streaming",
+    "header2": "FAQ",
+    "header3": "Is streaming faster?",
+    "text": "The total generation time is often similar, but users see results sooner.",
+    "embedding_text": "Title: Streaming\nCategory: Advanced Features\nSection: FAQ\n\nContent:\nThe total generation time is often similar, but users see results sooner."
+  },
+  {
+    "id": "2594e16ba1110c565e4a1eb4f187f1ed",
+    "filename": "streaming.md",
+    "title": "Streaming",
+    "category": "Advanced Features",
+    "audience": "Developers",
+    "topics": [
+      "streaming",
+      "real-time responses",
+      "latency",
+      "user experience"
+    ],
+    "related": [
+      "responses-api.md",
+      "function-calling.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Streaming",
+    "header2": "FAQ",
+    "header3": "Can streaming be used with RAG?",
+    "text": "Yes. Retrieve relevant context first, then stream the generated answer.",
+    "embedding_text": "Title: Streaming\nCategory: Advanced Features\nSection: FAQ\n\nContent:\nYes. Retrieve relevant context first, then stream the generated answer."
+  },
+  {
+    "id": "793f195152ea7ebb81336bf588045111",
+    "filename": "streaming.md",
+    "title": "Streaming",
+    "category": "Advanced Features",
+    "audience": "Developers",
+    "topics": [
+      "streaming",
+      "real-time responses",
+      "latency",
+      "user experience"
+    ],
+    "related": [
+      "responses-api.md",
+      "function-calling.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Streaming",
+    "header2": "Summary",
+    "header3": null,
+    "text": "Streaming improves responsiveness by delivering model output incrementally. It is especially valuable for chat interfaces, document assistants, and other applications where users benefit from seeing results immediately.",
+    "embedding_text": "Title: Streaming\nCategory: Advanced Features\nSection: Summary\n\nContent:\nStreaming improves responsiveness by delivering model output incrementally. It is especially valuable for chat interfaces, document assistants, and other applications where users benefit from seeing results immediately."
+  },
+  {
+    "id": "e574c60e89b9ca607fbeb83beae0195d",
+    "filename": "responses-api.md",
+    "title": "Responses API",
+    "category": "Core API",
+    "audience": "Developers",
+    "topics": [
+      "responses api",
+      "text generation",
+      "multimodal",
+      "sdk",
+      "python"
+    ],
+    "related": [
+      "authentication.md",
+      "streaming.md",
+      "function-calling.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Responses API",
+    "header2": null,
+    "header3": null,
+    "text": "**Last Updated:** July 2026",
+    "embedding_text": "Title: Responses API\nCategory: Core API\nSection: Responses API\n\nContent:\n**Last Updated:** July 2026"
+  },
+  {
+    "id": "d8e33f531a4c4f69e83fe686bc4bc370",
+    "filename": "responses-api.md",
+    "title": "Responses API",
+    "category": "Core API",
+    "audience": "Developers",
+    "topics": [
+      "responses api",
+      "text generation",
+      "multimodal",
+      "sdk",
+      "python"
+    ],
+    "related": [
+      "authentication.md",
+      "streaming.md",
+      "function-calling.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Responses API",
+    "header2": "Overview",
+    "header3": null,
+    "text": "The Responses API is the primary interface for interacting with OpenAI language models. It provides a consistent way to send inputs to a model and receive generated outputs. It supports text generation, structured outputs, multimodal inputs, streaming, and tool calling.",
+    "embedding_text": "Title: Responses API\nCategory: Core API\nSection: Overview\n\nContent:\nThe Responses API is the primary interface for interacting with OpenAI language models. It provides a consistent way to send inputs to a model and receive generated outputs. It supports text generation, structured outputs, multimodal inputs, streaming, and tool calling."
+  },
+  {
+    "id": "d48419aa12123ddd34d8ee558a885be9",
+    "filename": "responses-api.md",
+    "title": "Responses API",
+    "category": "Core API",
+    "audience": "Developers",
+    "topics": [
+      "responses api",
+      "text generation",
+      "multimodal",
+      "sdk",
+      "python"
+    ],
+    "related": [
+      "authentication.md",
+      "streaming.md",
+      "function-calling.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Responses API",
+    "header2": "Basic Request",
+    "header3": null,
+    "text": "```python\nfrom openai import OpenAI\n\nclient = OpenAI()\n\nresponse = client.responses.create(\nmodel=\"gpt-5\",\ninput=\"Explain what an API is in one paragraph.\"\n)\n\nprint(response.output_text)\n```",
+    "embedding_text": "Title: Responses API\nCategory: Core API\nSection: Basic Request\n\nContent:\n```python\nfrom openai import OpenAI\n\nclient = OpenAI()\n\nresponse = client.responses.create(\nmodel=\"gpt-5\",\ninput=\"Explain what an API is in one paragraph.\"\n)\n\nprint(response.output_text)\n```"
+  },
+  {
+    "id": "9ac602426452e5f8cc6c723f2228f1f0",
+    "filename": "responses-api.md",
+    "title": "Responses API",
+    "category": "Core API",
+    "audience": "Developers",
+    "topics": [
+      "responses api",
+      "text generation",
+      "multimodal",
+      "sdk",
+      "python"
+    ],
+    "related": [
+      "authentication.md",
+      "streaming.md",
+      "function-calling.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Responses API",
+    "header2": "Request Components",
+    "header3": null,
+    "text": "| Field | Description |\n|--------|-------------|\n| model | Model to use |\n| input | Prompt or conversation |\n| tools | Optional tool definitions |\n| stream | Enable streaming |\n| temperature | Controls randomness (if supported) |\n| max_output_tokens | Limits output length |",
+    "embedding_text": "Title: Responses API\nCategory: Core API\nSection: Request Components\n\nContent:\n| Field | Description |\n|--------|-------------|\n| model | Model to use |\n| input | Prompt or conversation |\n| tools | Optional tool definitions |\n| stream | Enable streaming |\n| temperature | Controls randomness (if supported) |\n| max_output_tokens | Limits output length |"
+  },
+  {
+    "id": "a2ea200fc5647c2a5c82d7c399f04756",
+    "filename": "responses-api.md",
+    "title": "Responses API",
+    "category": "Core API",
+    "audience": "Developers",
+    "topics": [
+      "responses api",
+      "text generation",
+      "multimodal",
+      "sdk",
+      "python"
+    ],
+    "related": [
+      "authentication.md",
+      "streaming.md",
+      "function-calling.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Responses API",
+    "header2": "Understanding Input",
+    "header3": null,
+    "text": "Simple prompt:  \n```python\ninput=\"What is machine learning?\"\n```  \nLong-form prompts may include detailed instructions and retrieved context for RAG applications.",
+    "embedding_text": "Title: Responses API\nCategory: Core API\nSection: Understanding Input\n\nContent:\nSimple prompt:  \n```python\ninput=\"What is machine learning?\"\n```  \nLong-form prompts may include detailed instructions and retrieved context for RAG applications."
+  },
+  {
+    "id": "f484b32fab6aaef67e80891d92ffc6a6",
+    "filename": "responses-api.md",
+    "title": "Responses API",
+    "category": "Core API",
+    "audience": "Developers",
+    "topics": [
+      "responses api",
+      "text generation",
+      "multimodal",
+      "sdk",
+      "python"
+    ],
+    "related": [
+      "authentication.md",
+      "streaming.md",
+      "function-calling.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Responses API",
+    "header2": "Understanding Output",
+    "header3": null,
+    "text": "The easiest way to access generated text is:  \n```python\nprint(response.output_text)\n```  \nDepending on the request, responses may also contain usage information, tool calls, or structured outputs.",
+    "embedding_text": "Title: Responses API\nCategory: Core API\nSection: Understanding Output\n\nContent:\nThe easiest way to access generated text is:  \n```python\nprint(response.output_text)\n```  \nDepending on the request, responses may also contain usage information, tool calls, or structured outputs."
+  },
+  {
+    "id": "19b14fd1b421e2153cd1850906e8db63",
+    "filename": "responses-api.md",
+    "title": "Responses API",
+    "category": "Core API",
+    "audience": "Developers",
+    "topics": [
+      "responses api",
+      "text generation",
+      "multimodal",
+      "sdk",
+      "python"
+    ],
+    "related": [
+      "authentication.md",
+      "streaming.md",
+      "function-calling.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Responses API",
+    "header2": "Example: Question Answering",
+    "header3": null,
+    "text": "```python\nresponse = client.responses.create(\nmodel=\"gpt-5\",\ninput=\"What are embeddings?\"\n)\n\nprint(response.output_text)\n```",
+    "embedding_text": "Title: Responses API\nCategory: Core API\nSection: Example: Question Answering\n\nContent:\n```python\nresponse = client.responses.create(\nmodel=\"gpt-5\",\ninput=\"What are embeddings?\"\n)\n\nprint(response.output_text)\n```"
+  },
+  {
+    "id": "f51aafeafc0012cc37abe1fd4bf32419",
+    "filename": "responses-api.md",
+    "title": "Responses API",
+    "category": "Core API",
+    "audience": "Developers",
+    "topics": [
+      "responses api",
+      "text generation",
+      "multimodal",
+      "sdk",
+      "python"
+    ],
+    "related": [
+      "authentication.md",
+      "streaming.md",
+      "function-calling.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Responses API",
+    "header2": "Example: Summarization",
+    "header3": null,
+    "text": "```python\narticle = \"Very long article...\"\n\nresponse = client.responses.create(\nmodel=\"gpt-5\",\ninput=f\"Summarize the following:\\n\\n{article}\"\n)\n\nprint(response.output_text)\n```",
+    "embedding_text": "Title: Responses API\nCategory: Core API\nSection: Example: Summarization\n\nContent:\n```python\narticle = \"Very long article...\"\n\nresponse = client.responses.create(\nmodel=\"gpt-5\",\ninput=f\"Summarize the following:\\n\\n{article}\"\n)\n\nprint(response.output_text)\n```"
+  },
+  {
+    "id": "fa1a9ac24a6d8e7dc58e0b0fe4a08b8f",
+    "filename": "responses-api.md",
+    "title": "Responses API",
+    "category": "Core API",
+    "audience": "Developers",
+    "topics": [
+      "responses api",
+      "text generation",
+      "multimodal",
+      "sdk",
+      "python"
+    ],
+    "related": [
+      "authentication.md",
+      "streaming.md",
+      "function-calling.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Responses API",
+    "header2": "Example: Translation",
+    "header3": null,
+    "text": "```python\nresponse = client.responses.create(\nmodel=\"gpt-5\",\ninput=\"Translate 'Good morning' into French.\"\n)\n\nprint(response.output_text)\n```",
+    "embedding_text": "Title: Responses API\nCategory: Core API\nSection: Example: Translation\n\nContent:\n```python\nresponse = client.responses.create(\nmodel=\"gpt-5\",\ninput=\"Translate 'Good morning' into French.\"\n)\n\nprint(response.output_text)\n```"
+  },
+  {
+    "id": "c484ad7a64410ddbc06e9e2526ebece6",
+    "filename": "responses-api.md",
+    "title": "Responses API",
+    "category": "Core API",
+    "audience": "Developers",
+    "topics": [
+      "responses api",
+      "text generation",
+      "multimodal",
+      "sdk",
+      "python"
+    ],
+    "related": [
+      "authentication.md",
+      "streaming.md",
+      "function-calling.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Responses API",
+    "header2": "Error Handling",
+    "header3": null,
+    "text": "Common issues include:  \n- Missing or invalid API key\n- Missing required fields\n- Invalid parameter values\n- Rate limiting",
+    "embedding_text": "Title: Responses API\nCategory: Core API\nSection: Error Handling\n\nContent:\nCommon issues include:  \n- Missing or invalid API key\n- Missing required fields\n- Invalid parameter values\n- Rate limiting"
+  },
+  {
+    "id": "1b8718f5cc7deca3605900fadd2bf95d",
+    "filename": "responses-api.md",
+    "title": "Responses API",
+    "category": "Core API",
+    "audience": "Developers",
+    "topics": [
+      "responses api",
+      "text generation",
+      "multimodal",
+      "sdk",
+      "python"
+    ],
+    "related": [
+      "authentication.md",
+      "streaming.md",
+      "function-calling.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Responses API",
+    "header2": "Best Practices",
+    "header3": null,
+    "text": "- Keep prompts focused.\n- Reuse the client object.\n- Log latency and token usage.\n- Handle API errors gracefully.\n- Send only relevant context in RAG systems.",
+    "embedding_text": "Title: Responses API\nCategory: Core API\nSection: Best Practices\n\nContent:\n- Keep prompts focused.\n- Reuse the client object.\n- Log latency and token usage.\n- Handle API errors gracefully.\n- Send only relevant context in RAG systems."
+  },
+  {
+    "id": "8f205f78b7e12310753a9f801bb1a926",
+    "filename": "responses-api.md",
+    "title": "Responses API",
+    "category": "Core API",
+    "audience": "Developers",
+    "topics": [
+      "responses api",
+      "text generation",
+      "multimodal",
+      "sdk",
+      "python"
+    ],
+    "related": [
+      "authentication.md",
+      "streaming.md",
+      "function-calling.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Responses API",
+    "header2": "Responses API in RAG",
+    "header3": null,
+    "text": "```\nUser Question\n│\n▼\nRetriever\n│\nRelevant Chunks\n│\n▼\nPrompt Builder\n│\n▼\nResponses API\n│\n▼\nGenerated Answer\n```",
+    "embedding_text": "Title: Responses API\nCategory: Core API\nSection: Responses API in RAG\n\nContent:\n```\nUser Question\n│\n▼\nRetriever\n│\nRelevant Chunks\n│\n▼\nPrompt Builder\n│\n▼\nResponses API\n│\n▼\nGenerated Answer\n```"
+  },
+  {
+    "id": "ec3203b2da22cf26498b27fe14b01cd1",
+    "filename": "responses-api.md",
+    "title": "Responses API",
+    "category": "Core API",
+    "audience": "Developers",
+    "topics": [
+      "responses api",
+      "text generation",
+      "multimodal",
+      "sdk",
+      "python"
+    ],
+    "related": [
+      "authentication.md",
+      "streaming.md",
+      "function-calling.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Responses API",
+    "header2": "Summary",
+    "header3": null,
+    "text": "The Responses API is the recommended interface for modern OpenAI applications and is well suited for chatbots, document assistants, and Retrieval-Augmented Generation systems.",
+    "embedding_text": "Title: Responses API\nCategory: Core API\nSection: Summary\n\nContent:\nThe Responses API is the recommended interface for modern OpenAI applications and is well suited for chatbots, document assistants, and Retrieval-Augmented Generation systems."
+  },
+  {
+    "id": "57d5c1213ea2cbcc509d9de7e5d120ff",
+    "filename": "function-calling.md",
+    "title": "Function Calling",
+    "category": "Advanced Features",
+    "audience": "Developers",
+    "topics": [
+      "function calling",
+      "tools",
+      "structured outputs",
+      "agents"
+    ],
+    "related": [
+      "responses-api.md",
+      "streaming.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Function Calling",
+    "header2": "Overview",
+    "header3": null,
+    "text": "Function calling allows a language model to request that your application execute a predefined function (tool). Instead of directly answering a question that requires external data or actions, the model returns a tool call that your application executes.",
+    "embedding_text": "Title: Function Calling\nCategory: Advanced Features\nSection: Overview\n\nContent:\nFunction calling allows a language model to request that your application execute a predefined function (tool). Instead of directly answering a question that requires external data or actions, the model returns a tool call that your application executes."
+  },
+  {
+    "id": "6185c9ad6dc2f480ecb1b5afd22ab11b",
+    "filename": "function-calling.md",
+    "title": "Function Calling",
+    "category": "Advanced Features",
+    "audience": "Developers",
+    "topics": [
+      "function calling",
+      "tools",
+      "structured outputs",
+      "agents"
+    ],
+    "related": [
+      "responses-api.md",
+      "streaming.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Function Calling",
+    "header2": "Common Use Cases",
+    "header3": null,
+    "text": "- Weather lookups\n- Database queries\n- Calendar events\n- Order status\n- Internal business APIs",
+    "embedding_text": "Title: Function Calling\nCategory: Advanced Features\nSection: Common Use Cases\n\nContent:\n- Weather lookups\n- Database queries\n- Calendar events\n- Order status\n- Internal business APIs"
+  },
+  {
+    "id": "943d55d61e03f329dc7304dcbff58412",
+    "filename": "function-calling.md",
+    "title": "Function Calling",
+    "category": "Advanced Features",
+    "audience": "Developers",
+    "topics": [
+      "function calling",
+      "tools",
+      "structured outputs",
+      "agents"
+    ],
+    "related": [
+      "responses-api.md",
+      "streaming.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Function Calling",
+    "header2": "Tool Definition",
+    "header3": null,
+    "text": "```python\ntools = [\n{\n\"type\": \"function\",\n\"name\": \"get_weather\",\n\"description\": \"Get the current weather for a city.\",\n\"parameters\": {\n\"type\": \"object\",\n\"properties\": {\n\"city\": {\"type\": \"string\"}\n},\n\"required\": [\"city\"]\n}\n}\n]\n```",
+    "embedding_text": "Title: Function Calling\nCategory: Advanced Features\nSection: Tool Definition\n\nContent:\n```python\ntools = [\n{\n\"type\": \"function\",\n\"name\": \"get_weather\",\n\"description\": \"Get the current weather for a city.\",\n\"parameters\": {\n\"type\": \"object\",\n\"properties\": {\n\"city\": {\"type\": \"string\"}\n},\n\"required\": [\"city\"]\n}\n}\n]\n```"
+  },
+  {
+    "id": "f97579a7922a5ac18119a87112a98ff2",
+    "filename": "function-calling.md",
+    "title": "Function Calling",
+    "category": "Advanced Features",
+    "audience": "Developers",
+    "topics": [
+      "function calling",
+      "tools",
+      "structured outputs",
+      "agents"
+    ],
+    "related": [
+      "responses-api.md",
+      "streaming.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Function Calling",
+    "header2": "Basic Flow",
+    "header3": null,
+    "text": "1. Send the user's question and tool definitions.\n2. The model decides whether a tool is needed.\n3. Your application executes the requested function.\n4. Return the tool result to the model.\n5. The model generates the final answer.",
+    "embedding_text": "Title: Function Calling\nCategory: Advanced Features\nSection: Basic Flow\n\nContent:\n1. Send the user's question and tool definitions.\n2. The model decides whether a tool is needed.\n3. Your application executes the requested function.\n4. Return the tool result to the model.\n5. The model generates the final answer."
+  },
+  {
+    "id": "876fbab02db1cca784c36b41022af201",
+    "filename": "function-calling.md",
+    "title": "Function Calling",
+    "category": "Advanced Features",
+    "audience": "Developers",
+    "topics": [
+      "function calling",
+      "tools",
+      "structured outputs",
+      "agents"
+    ],
+    "related": [
+      "responses-api.md",
+      "streaming.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Function Calling",
+    "header2": "Example Workflow",
+    "header3": null,
+    "text": "```text\nUser\n│\n▼\nResponses API\n│\nTool Call\n▼\nYour Function\n│\nTool Result\n▼\nResponses API\n│\nFinal Answer\n```",
+    "embedding_text": "Title: Function Calling\nCategory: Advanced Features\nSection: Example Workflow\n\nContent:\n```text\nUser\n│\n▼\nResponses API\n│\nTool Call\n▼\nYour Function\n│\nTool Result\n▼\nResponses API\n│\nFinal Answer\n```"
+  },
+  {
+    "id": "add2d3d2e148266089e1d97522b06292",
+    "filename": "function-calling.md",
+    "title": "Function Calling",
+    "category": "Advanced Features",
+    "audience": "Developers",
+    "topics": [
+      "function calling",
+      "tools",
+      "structured outputs",
+      "agents"
+    ],
+    "related": [
+      "responses-api.md",
+      "streaming.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Function Calling",
+    "header2": "Best Practices",
+    "header3": null,
+    "text": "- Keep tool descriptions clear.\n- Validate all function arguments.\n- Handle failures gracefully.\n- Return structured data.\n- Only expose trusted functions.",
+    "embedding_text": "Title: Function Calling\nCategory: Advanced Features\nSection: Best Practices\n\nContent:\n- Keep tool descriptions clear.\n- Validate all function arguments.\n- Handle failures gracefully.\n- Return structured data.\n- Only expose trusted functions."
+  },
+  {
+    "id": "d211338ef7ae9e8cd3cdfcb21548f59a",
+    "filename": "function-calling.md",
+    "title": "Function Calling",
+    "category": "Advanced Features",
+    "audience": "Developers",
+    "topics": [
+      "function calling",
+      "tools",
+      "structured outputs",
+      "agents"
+    ],
+    "related": [
+      "responses-api.md",
+      "streaming.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Function Calling",
+    "header2": "Common Mistakes",
+    "header3": null,
+    "text": "- Letting the model execute arbitrary code.\n- Skipping argument validation.\n- Returning inconsistent data formats.",
+    "embedding_text": "Title: Function Calling\nCategory: Advanced Features\nSection: Common Mistakes\n\nContent:\n- Letting the model execute arbitrary code.\n- Skipping argument validation.\n- Returning inconsistent data formats."
+  },
+  {
+    "id": "1d74c2fc958d17f3dd0129c332aee88c",
+    "filename": "function-calling.md",
+    "title": "Function Calling",
+    "category": "Advanced Features",
+    "audience": "Developers",
+    "topics": [
+      "function calling",
+      "tools",
+      "structured outputs",
+      "agents"
+    ],
+    "related": [
+      "responses-api.md",
+      "streaming.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Function Calling",
+    "header2": "FAQ",
+    "header3": "Does the model execute my code?",
+    "text": "No. Your application executes the function after receiving the tool call.",
+    "embedding_text": "Title: Function Calling\nCategory: Advanced Features\nSection: FAQ\n\nContent:\nNo. Your application executes the function after receiving the tool call."
+  },
+  {
+    "id": "f065f68c530cd1e79b017d7f91074bc1",
+    "filename": "function-calling.md",
+    "title": "Function Calling",
+    "category": "Advanced Features",
+    "audience": "Developers",
+    "topics": [
+      "function calling",
+      "tools",
+      "structured outputs",
+      "agents"
+    ],
+    "related": [
+      "responses-api.md",
+      "streaming.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Function Calling",
+    "header2": "FAQ",
+    "header3": "Can I define multiple tools?",
+    "text": "Yes. The model can choose the appropriate tool based on the user's request.",
+    "embedding_text": "Title: Function Calling\nCategory: Advanced Features\nSection: FAQ\n\nContent:\nYes. The model can choose the appropriate tool based on the user's request."
+  },
+  {
+    "id": "09ef54fb21f3e39f5cdf7c1f0eda468d",
+    "filename": "function-calling.md",
+    "title": "Function Calling",
+    "category": "Advanced Features",
+    "audience": "Developers",
+    "topics": [
+      "function calling",
+      "tools",
+      "structured outputs",
+      "agents"
+    ],
+    "related": [
+      "responses-api.md",
+      "streaming.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Function Calling",
+    "header2": "Summary",
+    "header3": null,
+    "text": "Function calling connects language models with external systems. It enables applications to retrieve live information, perform actions, and combine LLM reasoning with business logic in a controlled and secure way.",
+    "embedding_text": "Title: Function Calling\nCategory: Advanced Features\nSection: Summary\n\nContent:\nFunction calling connects language models with external systems. It enables applications to retrieve live information, perform actions, and combine LLM reasoning with business logic in a controlled and secure way."
+  },
+  {
+    "id": "5a3d569584933725c9929a47abd0a5eb",
+    "filename": "authentication.md",
+    "title": "Authentication",
+    "category": "Getting Started",
+    "audience": "Developers",
+    "topics": [
+      "authentication",
+      "api keys",
+      "security",
+      "environment variables"
+    ],
+    "related": [
+      "responses-api.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Authentication",
+    "header2": null,
+    "header3": null,
+    "text": "**Last Updated:** July 2026",
+    "embedding_text": "Title: Authentication\nCategory: Getting Started\nSection: Authentication\n\nContent:\n**Last Updated:** July 2026"
+  },
+  {
+    "id": "d9ccbc9d156735d0d50ac7a69eb83df6",
+    "filename": "authentication.md",
+    "title": "Authentication",
+    "category": "Getting Started",
+    "audience": "Developers",
+    "topics": [
+      "authentication",
+      "api keys",
+      "security",
+      "environment variables"
+    ],
+    "related": [
+      "responses-api.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Authentication",
+    "header2": "Overview",
+    "header3": null,
+    "text": "Before your application can interact with the OpenAI API, it must authenticate every request using an API key. Authentication allows OpenAI to identify your project, apply usage limits, attribute billing correctly, and authorize access to models and services.  \nAPI keys should always be treated as sensitive credentials. Never embed them directly into source code, client-side applications, or public repositories.",
+    "embedding_text": "Title: Authentication\nCategory: Getting Started\nSection: Overview\n\nContent:\nBefore your application can interact with the OpenAI API, it must authenticate every request using an API key. Authentication allows OpenAI to identify your project, apply usage limits, attribute billing correctly, and authorize access to models and services.  \nAPI keys should always be treated as sensitive credentials. Never embed them directly into source code, client-side applications, or public repositories."
+  },
+  {
+    "id": "03f8ee7920f349f2ed38845715d7b17a",
+    "filename": "authentication.md",
+    "title": "Authentication",
+    "category": "Getting Started",
+    "audience": "Developers",
+    "topics": [
+      "authentication",
+      "api keys",
+      "security",
+      "environment variables"
+    ],
+    "related": [
+      "responses-api.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Authentication",
+    "header2": "How Authentication Works",
+    "header3": null,
+    "text": "Every request includes an Authorization header:  \n```text\nAuthorization: Bearer YOUR_API_KEY\n```  \nThe server validates the key before processing the request.",
+    "embedding_text": "Title: Authentication\nCategory: Getting Started\nSection: How Authentication Works\n\nContent:\nEvery request includes an Authorization header:  \n```text\nAuthorization: Bearer YOUR_API_KEY\n```  \nThe server validates the key before processing the request."
+  },
+  {
+    "id": "2252ec65df50b743ff9939bc1bdf1ad3",
+    "filename": "authentication.md",
+    "title": "Authentication",
+    "category": "Getting Started",
+    "audience": "Developers",
+    "topics": [
+      "authentication",
+      "api keys",
+      "security",
+      "environment variables"
+    ],
+    "related": [
+      "responses-api.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Authentication",
+    "header2": "Creating an API Key",
+    "header3": null,
+    "text": "1. Create or sign in to your OpenAI account.\n2. Create a project.\n3. Generate a new API key.\n4. Copy the key immediately.\n5. Store it securely.",
+    "embedding_text": "Title: Authentication\nCategory: Getting Started\nSection: Creating an API Key\n\nContent:\n1. Create or sign in to your OpenAI account.\n2. Create a project.\n3. Generate a new API key.\n4. Copy the key immediately.\n5. Store it securely."
+  },
+  {
+    "id": "84faa05291b1eaecb8cf33ac9446b303",
+    "filename": "authentication.md",
+    "title": "Authentication",
+    "category": "Getting Started",
+    "audience": "Developers",
+    "topics": [
+      "authentication",
+      "api keys",
+      "security",
+      "environment variables"
+    ],
+    "related": [
+      "responses-api.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Authentication",
+    "header2": "Storing API Keys Securely",
+    "header3": null,
+    "text": "Avoid hardcoding keys:  \n```python\nclient = OpenAI(api_key=\"sk-...\")\n```  \nInstead:  \n```bash\nexport OPENAI_API_KEY=\"your_api_key\"\n```  \n```python\nimport os\nfrom openai import OpenAI\n\nclient = OpenAI(api_key=os.environ[\"OPENAI_API_KEY\"])\n```",
+    "embedding_text": "Title: Authentication\nCategory: Getting Started\nSection: Storing API Keys Securely\n\nContent:\nAvoid hardcoding keys:  \n```python\nclient = OpenAI(api_key=\"sk-...\")\n```  \nInstead:  \n```bash\nexport OPENAI_API_KEY=\"your_api_key\"\n```  \n```python\nimport os\nfrom openai import OpenAI\n\nclient = OpenAI(api_key=os.environ[\"OPENAI_API_KEY\"])\n```"
+  },
+  {
+    "id": "433b8cbe247e7ebbb99610ef61418452",
+    "filename": "authentication.md",
+    "title": "Authentication",
+    "category": "Getting Started",
+    "audience": "Developers",
+    "topics": [
+      "authentication",
+      "api keys",
+      "security",
+      "environment variables"
+    ],
+    "related": [
+      "responses-api.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Authentication",
+    "header2": "Using a .env File",
+    "header3": null,
+    "text": "```text\nOPENAI_API_KEY=your_api_key_here\n```  \n```python\nfrom dotenv import load_dotenv\nimport os\n\nload_dotenv()\nkey = os.getenv(\"OPENAI_API_KEY\")\n```",
+    "embedding_text": "Title: Authentication\nCategory: Getting Started\nSection: Using a .env File\n\nContent:\n```text\nOPENAI_API_KEY=your_api_key_here\n```  \n```python\nfrom dotenv import load_dotenv\nimport os\n\nload_dotenv()\nkey = os.getenv(\"OPENAI_API_KEY\")\n```"
+  },
+  {
+    "id": "24d8a66a058d040ac53a1ba70541916f",
+    "filename": "authentication.md",
+    "title": "Authentication",
+    "category": "Getting Started",
+    "audience": "Developers",
+    "topics": [
+      "authentication",
+      "api keys",
+      "security",
+      "environment variables"
+    ],
+    "related": [
+      "responses-api.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Authentication",
+    "header2": "Initializing the Client",
+    "header3": null,
+    "text": "```python\nfrom openai import OpenAI\n\nclient = OpenAI()\n```",
+    "embedding_text": "Title: Authentication\nCategory: Getting Started\nSection: Initializing the Client\n\nContent:\n```python\nfrom openai import OpenAI\n\nclient = OpenAI()\n```"
+  },
+  {
+    "id": "cb59842ed57e82dc5d9a2d15f977f5ea",
+    "filename": "authentication.md",
+    "title": "Authentication",
+    "category": "Getting Started",
+    "audience": "Developers",
+    "topics": [
+      "authentication",
+      "api keys",
+      "security",
+      "environment variables"
+    ],
+    "related": [
+      "responses-api.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Authentication",
+    "header2": "First Request",
+    "header3": null,
+    "text": "```python\nfrom openai import OpenAI\n\nclient = OpenAI()\n\nresponse = client.responses.create(\nmodel=\"gpt-5\",\ninput=\"Say hello.\"\n)\n\nprint(response.output_text)\n```",
+    "embedding_text": "Title: Authentication\nCategory: Getting Started\nSection: First Request\n\nContent:\n```python\nfrom openai import OpenAI\n\nclient = OpenAI()\n\nresponse = client.responses.create(\nmodel=\"gpt-5\",\ninput=\"Say hello.\"\n)\n\nprint(response.output_text)\n```"
+  },
+  {
+    "id": "8da85cd762b805b9ffad2306e663b9af",
+    "filename": "authentication.md",
+    "title": "Authentication",
+    "category": "Getting Started",
+    "audience": "Developers",
+    "topics": [
+      "authentication",
+      "api keys",
+      "security",
+      "environment variables"
+    ],
+    "related": [
+      "responses-api.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Authentication",
+    "header2": "Common Errors",
+    "header3": "Missing API Key",
+    "text": "- Environment variable not set\n- Incorrect variable name",
+    "embedding_text": "Title: Authentication\nCategory: Getting Started\nSection: Common Errors\n\nContent:\n- Environment variable not set\n- Incorrect variable name"
+  },
+  {
+    "id": "5095f96b64a872726573ad58b7efe5f3",
+    "filename": "authentication.md",
+    "title": "Authentication",
+    "category": "Getting Started",
+    "audience": "Developers",
+    "topics": [
+      "authentication",
+      "api keys",
+      "security",
+      "environment variables"
+    ],
+    "related": [
+      "responses-api.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Authentication",
+    "header2": "Common Errors",
+    "header3": "Invalid API Key",
+    "text": "- Typo\n- Deleted or inactive key",
+    "embedding_text": "Title: Authentication\nCategory: Getting Started\nSection: Common Errors\n\nContent:\n- Typo\n- Deleted or inactive key"
+  },
+  {
+    "id": "f6e4a9c2f7067c628719c3387d88aa0c",
+    "filename": "authentication.md",
+    "title": "Authentication",
+    "category": "Getting Started",
+    "audience": "Developers",
+    "topics": [
+      "authentication",
+      "api keys",
+      "security",
+      "environment variables"
+    ],
+    "related": [
+      "responses-api.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Authentication",
+    "header2": "Security Best Practices",
+    "header3": null,
+    "text": "**Do**\n- Store keys in environment variables\n- Rotate keys periodically\n- Use separate keys for development and production  \n**Don't**\n- Commit keys to Git\n- Expose keys in frontend applications\n- Share keys publicly",
+    "embedding_text": "Title: Authentication\nCategory: Getting Started\nSection: Security Best Practices\n\nContent:\n**Do**\n- Store keys in environment variables\n- Rotate keys periodically\n- Use separate keys for development and production  \n**Don't**\n- Commit keys to Git\n- Expose keys in frontend applications\n- Share keys publicly"
+  },
+  {
+    "id": "eff488370534a990a12bb45f45f17ff0",
+    "filename": "authentication.md",
+    "title": "Authentication",
+    "category": "Getting Started",
+    "audience": "Developers",
+    "topics": [
+      "authentication",
+      "api keys",
+      "security",
+      "environment variables"
+    ],
+    "related": [
+      "responses-api.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Authentication",
+    "header2": "FAQ",
+    "header3": "Can I expose my API key in browser JavaScript?",
+    "text": "No. Always send requests through a trusted backend.",
+    "embedding_text": "Title: Authentication\nCategory: Getting Started\nSection: FAQ\n\nContent:\nNo. Always send requests through a trusted backend."
+  },
+  {
+    "id": "08c29f9050e36a472fbd9beb03c3d7ad",
+    "filename": "authentication.md",
+    "title": "Authentication",
+    "category": "Getting Started",
+    "audience": "Developers",
+    "topics": [
+      "authentication",
+      "api keys",
+      "security",
+      "environment variables"
+    ],
+    "related": [
+      "responses-api.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Authentication",
+    "header2": "FAQ",
+    "header3": "Should I use different keys for dev and production?",
+    "text": "Yes.",
+    "embedding_text": "Title: Authentication\nCategory: Getting Started\nSection: FAQ\n\nContent:\nYes."
+  },
+  {
+    "id": "e0a279358925a3bd38c8f4c2161e2f60",
+    "filename": "authentication.md",
+    "title": "Authentication",
+    "category": "Getting Started",
+    "audience": "Developers",
+    "topics": [
+      "authentication",
+      "api keys",
+      "security",
+      "environment variables"
+    ],
+    "related": [
+      "responses-api.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Authentication",
+    "header2": "Summary",
+    "header3": null,
+    "text": "Authentication is required for every OpenAI API request. Store credentials securely, use environment variables, and follow good secret-management practices.",
+    "embedding_text": "Title: Authentication\nCategory: Getting Started\nSection: Summary\n\nContent:\nAuthentication is required for every OpenAI API request. Store credentials securely, use environment variables, and follow good secret-management practices."
+  },
+  {
+    "id": "2c4fb68a9b37d1a2b70bc80bf7f416b6",
+    "filename": "models.md",
+    "title": "Models",
+    "category": "Core Concepts",
+    "audience": "Developers",
+    "topics": [
+      "models",
+      "model selection",
+      "reasoning",
+      "embeddings"
+    ],
+    "related": [
+      "responses-api.md",
+      "embeddings.md",
+      "function-calling.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Models",
+    "header2": "Overview",
+    "header3": null,
+    "text": "A model is the AI system that processes your input and generates an output. Different models are designed for different tasks, such as reasoning, text generation, multimodal understanding, or creating embeddings.  \nSelecting the right model involves balancing quality, speed, latency, and cost.",
+    "embedding_text": "Title: Models\nCategory: Core Concepts\nSection: Overview\n\nContent:\nA model is the AI system that processes your input and generates an output. Different models are designed for different tasks, such as reasoning, text generation, multimodal understanding, or creating embeddings.  \nSelecting the right model involves balancing quality, speed, latency, and cost."
+  },
+  {
+    "id": "78f563b83deb7c8aeb9a7da72f7308b2",
+    "filename": "models.md",
+    "title": "Models",
+    "category": "Core Concepts",
+    "audience": "Developers",
+    "topics": [
+      "models",
+      "model selection",
+      "reasoning",
+      "embeddings"
+    ],
+    "related": [
+      "responses-api.md",
+      "embeddings.md",
+      "function-calling.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Models",
+    "header2": "Model Categories",
+    "header3": "Language Models",
+    "text": "Used for:  \n- Chatbots\n- Question answering\n- Summarization\n- Content generation\n- Code assistance  \nThese models are commonly accessed through the Responses API.",
+    "embedding_text": "Title: Models\nCategory: Core Concepts\nSection: Model Categories\n\nContent:\nUsed for:  \n- Chatbots\n- Question answering\n- Summarization\n- Content generation\n- Code assistance  \nThese models are commonly accessed through the Responses API."
+  },
+  {
+    "id": "d59274ba765fa87543eea4398b94ccc3",
+    "filename": "models.md",
+    "title": "Models",
+    "category": "Core Concepts",
+    "audience": "Developers",
+    "topics": [
+      "models",
+      "model selection",
+      "reasoning",
+      "embeddings"
+    ],
+    "related": [
+      "responses-api.md",
+      "embeddings.md",
+      "function-calling.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Models",
+    "header2": "Model Categories",
+    "header3": "Embedding Models",
+    "text": "Embedding models convert text into numerical vectors for:  \n- Semantic search\n- Retrieval-Augmented Generation (RAG)\n- Recommendation systems\n- Clustering  \nUnlike language models, embedding models do not generate text.",
+    "embedding_text": "Title: Models\nCategory: Core Concepts\nSection: Model Categories\n\nContent:\nEmbedding models convert text into numerical vectors for:  \n- Semantic search\n- Retrieval-Augmented Generation (RAG)\n- Recommendation systems\n- Clustering  \nUnlike language models, embedding models do not generate text."
+  },
+  {
+    "id": "93cc38f095484f397775e175ec2d680f",
+    "filename": "models.md",
+    "title": "Models",
+    "category": "Core Concepts",
+    "audience": "Developers",
+    "topics": [
+      "models",
+      "model selection",
+      "reasoning",
+      "embeddings"
+    ],
+    "related": [
+      "responses-api.md",
+      "embeddings.md",
+      "function-calling.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Models",
+    "header2": "Choosing a Model",
+    "header3": null,
+    "text": "Consider:  \n- Task complexity\n- Response quality\n- Latency requirements\n- Cost\n- Context window\n- Multimodal support",
+    "embedding_text": "Title: Models\nCategory: Core Concepts\nSection: Choosing a Model\n\nContent:\nConsider:  \n- Task complexity\n- Response quality\n- Latency requirements\n- Cost\n- Context window\n- Multimodal support"
+  },
+  {
+    "id": "b9a04e44d99077624fb0c77e504007b8",
+    "filename": "models.md",
+    "title": "Models",
+    "category": "Core Concepts",
+    "audience": "Developers",
+    "topics": [
+      "models",
+      "model selection",
+      "reasoning",
+      "embeddings"
+    ],
+    "related": [
+      "responses-api.md",
+      "embeddings.md",
+      "function-calling.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Models",
+    "header2": "Example",
+    "header3": null,
+    "text": "```python\nfrom openai import OpenAI\n\nclient = OpenAI()\n\nresponse = client.responses.create(\nmodel=\"gpt-5\",\ninput=\"Explain vector databases.\"\n)\n\nprint(response.output_text)\n```  \nEmbedding example:  \n```python\nembedding = client.embeddings.create(\nmodel=\"text-embedding-3-small\",\ninput=\"Vector databases\"\n)\n```",
+    "embedding_text": "Title: Models\nCategory: Core Concepts\nSection: Example\n\nContent:\n```python\nfrom openai import OpenAI\n\nclient = OpenAI()\n\nresponse = client.responses.create(\nmodel=\"gpt-5\",\ninput=\"Explain vector databases.\"\n)\n\nprint(response.output_text)\n```  \nEmbedding example:  \n```python\nembedding = client.embeddings.create(\nmodel=\"text-embedding-3-small\",\ninput=\"Vector databases\"\n)\n```"
+  },
+  {
+    "id": "83c3d1d49faf321a2b768a231c7ef8b3",
+    "filename": "models.md",
+    "title": "Models",
+    "category": "Core Concepts",
+    "audience": "Developers",
+    "topics": [
+      "models",
+      "model selection",
+      "reasoning",
+      "embeddings"
+    ],
+    "related": [
+      "responses-api.md",
+      "embeddings.md",
+      "function-calling.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Models",
+    "header2": "Best Practices",
+    "header3": null,
+    "text": "- Use language models for generation.\n- Use embedding models for retrieval.\n- Test different models for your workload.\n- Monitor latency and cost in production.",
+    "embedding_text": "Title: Models\nCategory: Core Concepts\nSection: Best Practices\n\nContent:\n- Use language models for generation.\n- Use embedding models for retrieval.\n- Test different models for your workload.\n- Monitor latency and cost in production."
+  },
+  {
+    "id": "2038ec196340280e0dba9016f5248e73",
+    "filename": "models.md",
+    "title": "Models",
+    "category": "Core Concepts",
+    "audience": "Developers",
+    "topics": [
+      "models",
+      "model selection",
+      "reasoning",
+      "embeddings"
+    ],
+    "related": [
+      "responses-api.md",
+      "embeddings.md",
+      "function-calling.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Models",
+    "header2": "Common Mistakes",
+    "header3": null,
+    "text": "- Using a language model to generate embeddings.\n- Mixing embedding models within the same vector index.\n- Choosing the largest model for every task.",
+    "embedding_text": "Title: Models\nCategory: Core Concepts\nSection: Common Mistakes\n\nContent:\n- Using a language model to generate embeddings.\n- Mixing embedding models within the same vector index.\n- Choosing the largest model for every task."
+  },
+  {
+    "id": "486703a7c5de18442eb36da9137db32e",
+    "filename": "models.md",
+    "title": "Models",
+    "category": "Core Concepts",
+    "audience": "Developers",
+    "topics": [
+      "models",
+      "model selection",
+      "reasoning",
+      "embeddings"
+    ],
+    "related": [
+      "responses-api.md",
+      "embeddings.md",
+      "function-calling.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Models",
+    "header2": "FAQ",
+    "header3": "Can I change models later?",
+    "text": "Yes. Most applications can switch models with minimal code changes.",
+    "embedding_text": "Title: Models\nCategory: Core Concepts\nSection: FAQ\n\nContent:\nYes. Most applications can switch models with minimal code changes."
+  },
+  {
+    "id": "f996a530f1a2f06caf10377622625f53",
+    "filename": "models.md",
+    "title": "Models",
+    "category": "Core Concepts",
+    "audience": "Developers",
+    "topics": [
+      "models",
+      "model selection",
+      "reasoning",
+      "embeddings"
+    ],
+    "related": [
+      "responses-api.md",
+      "embeddings.md",
+      "function-calling.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Models",
+    "header2": "FAQ",
+    "header3": "Which model should I use for RAG?",
+    "text": "A common architecture combines an embedding model for retrieval with a language model for answer generation.",
+    "embedding_text": "Title: Models\nCategory: Core Concepts\nSection: FAQ\n\nContent:\nA common architecture combines an embedding model for retrieval with a language model for answer generation."
+  },
+  {
+    "id": "216db2e86404b30d2af67b666c565e94",
+    "filename": "models.md",
+    "title": "Models",
+    "category": "Core Concepts",
+    "audience": "Developers",
+    "topics": [
+      "models",
+      "model selection",
+      "reasoning",
+      "embeddings"
+    ],
+    "related": [
+      "responses-api.md",
+      "embeddings.md",
+      "function-calling.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Models",
+    "header2": "Summary",
+    "header3": null,
+    "text": "Models are the core of every OpenAI application. Understanding the differences between language and embedding models helps you design efficient, scalable, and cost-effective AI systems.",
+    "embedding_text": "Title: Models\nCategory: Core Concepts\nSection: Summary\n\nContent:\nModels are the core of every OpenAI application. Understanding the differences between language and embedding models helps you design efficient, scalable, and cost-effective AI systems."
+  },
+  {
+    "id": "3c1afccf4e156430cb2958a9c5ff66dd",
+    "filename": "embeddings.md",
+    "title": "Embeddings",
+    "category": "Core API",
+    "audience": "Developers",
+    "topics": [
+      "embeddings",
+      "vector search",
+      "semantic search",
+      "rag"
+    ],
+    "related": [
+      "responses-api.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Embeddings",
+    "header2": "Overview",
+    "header3": null,
+    "text": "Embeddings convert text into numerical vectors that capture semantic meaning. Similar pieces of text produce vectors that are close together in vector space, making embeddings useful for semantic search and Retrieval-Augmented Generation (RAG).",
+    "embedding_text": "Title: Embeddings\nCategory: Core API\nSection: Overview\n\nContent:\nEmbeddings convert text into numerical vectors that capture semantic meaning. Similar pieces of text produce vectors that are close together in vector space, making embeddings useful for semantic search and Retrieval-Augmented Generation (RAG)."
+  },
+  {
+    "id": "a4f882a82b85d7c085318f95ef3b5710",
+    "filename": "embeddings.md",
+    "title": "Embeddings",
+    "category": "Core API",
+    "audience": "Developers",
+    "topics": [
+      "embeddings",
+      "vector search",
+      "semantic search",
+      "rag"
+    ],
+    "related": [
+      "responses-api.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Embeddings",
+    "header2": "Common Uses",
+    "header3": null,
+    "text": "- Semantic search\n- Document retrieval\n- Question answering\n- Recommendation systems\n- Clustering and classification",
+    "embedding_text": "Title: Embeddings\nCategory: Core API\nSection: Common Uses\n\nContent:\n- Semantic search\n- Document retrieval\n- Question answering\n- Recommendation systems\n- Clustering and classification"
+  },
+  {
+    "id": "c70df0e98721ec606d01c0b3ea97a246",
+    "filename": "embeddings.md",
+    "title": "Embeddings",
+    "category": "Core API",
+    "audience": "Developers",
+    "topics": [
+      "embeddings",
+      "vector search",
+      "semantic search",
+      "rag"
+    ],
+    "related": [
+      "responses-api.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Embeddings",
+    "header2": "Creating an Embedding",
+    "header3": null,
+    "text": "```python\nfrom openai import OpenAI\n\nclient = OpenAI()\n\nresponse = client.embeddings.create(\nmodel=\"text-embedding-3-small\",\ninput=\"Authentication requires an API key.\"\n)\n\nvector = response.data[0].embedding\nprint(len(vector))\n```",
+    "embedding_text": "Title: Embeddings\nCategory: Core API\nSection: Creating an Embedding\n\nContent:\n```python\nfrom openai import OpenAI\n\nclient = OpenAI()\n\nresponse = client.embeddings.create(\nmodel=\"text-embedding-3-small\",\ninput=\"Authentication requires an API key.\"\n)\n\nvector = response.data[0].embedding\nprint(len(vector))\n```"
+  },
+  {
+    "id": "ae63eb00b8669ef130b8627359517632",
+    "filename": "embeddings.md",
+    "title": "Embeddings",
+    "category": "Core API",
+    "audience": "Developers",
+    "topics": [
+      "embeddings",
+      "vector search",
+      "semantic search",
+      "rag"
+    ],
+    "related": [
+      "responses-api.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Embeddings",
+    "header2": "Typical RAG Workflow",
+    "header3": null,
+    "text": "1. Load documents.\n2. Split documents into chunks.\n3. Create an embedding for each chunk.\n4. Store vectors in a vector database.\n5. Embed the user's question.\n6. Retrieve the nearest chunks.\n7. Send the retrieved context to the Responses API.",
+    "embedding_text": "Title: Embeddings\nCategory: Core API\nSection: Typical RAG Workflow\n\nContent:\n1. Load documents.\n2. Split documents into chunks.\n3. Create an embedding for each chunk.\n4. Store vectors in a vector database.\n5. Embed the user's question.\n6. Retrieve the nearest chunks.\n7. Send the retrieved context to the Responses API."
+  },
+  {
+    "id": "af8e06274f9cccdd5310e57951b9bd1f",
+    "filename": "embeddings.md",
+    "title": "Embeddings",
+    "category": "Core API",
+    "audience": "Developers",
+    "topics": [
+      "embeddings",
+      "vector search",
+      "semantic search",
+      "rag"
+    ],
+    "related": [
+      "responses-api.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Embeddings",
+    "header2": "Chunking",
+    "header3": null,
+    "text": "Good chunks are focused on a single topic and include enough context to stand on their own.  \nTypical settings:  \n- Chunk size: 400–800 characters\n- Overlap: 50–150 characters",
+    "embedding_text": "Title: Embeddings\nCategory: Core API\nSection: Chunking\n\nContent:\nGood chunks are focused on a single topic and include enough context to stand on their own.  \nTypical settings:  \n- Chunk size: 400–800 characters\n- Overlap: 50–150 characters"
+  },
+  {
+    "id": "5b4105084e687108eba0827845a5d19c",
+    "filename": "embeddings.md",
+    "title": "Embeddings",
+    "category": "Core API",
+    "audience": "Developers",
+    "topics": [
+      "embeddings",
+      "vector search",
+      "semantic search",
+      "rag"
+    ],
+    "related": [
+      "responses-api.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Embeddings",
+    "header2": "Similarity Search",
+    "header3": null,
+    "text": "When a user asks a question, create an embedding for the query and compare it with stored document vectors using a similarity metric such as cosine similarity.",
+    "embedding_text": "Title: Embeddings\nCategory: Core API\nSection: Similarity Search\n\nContent:\nWhen a user asks a question, create an embedding for the query and compare it with stored document vectors using a similarity metric such as cosine similarity."
+  },
+  {
+    "id": "f762828f1afe75c911c0ee4f55d379d4",
+    "filename": "embeddings.md",
+    "title": "Embeddings",
+    "category": "Core API",
+    "audience": "Developers",
+    "topics": [
+      "embeddings",
+      "vector search",
+      "semantic search",
+      "rag"
+    ],
+    "related": [
+      "responses-api.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Embeddings",
+    "header2": "Best Practices",
+    "header3": null,
+    "text": "- Use the same embedding model for documents and queries.\n- Re-embed documents if you change embedding models.\n- Store metadata (source, title, section) alongside each vector.\n- Chunk before embedding.",
+    "embedding_text": "Title: Embeddings\nCategory: Core API\nSection: Best Practices\n\nContent:\n- Use the same embedding model for documents and queries.\n- Re-embed documents if you change embedding models.\n- Store metadata (source, title, section) alongside each vector.\n- Chunk before embedding."
+  },
+  {
+    "id": "9ac015da5fe3ba51b5e83d2be69eb30e",
+    "filename": "embeddings.md",
+    "title": "Embeddings",
+    "category": "Core API",
+    "audience": "Developers",
+    "topics": [
+      "embeddings",
+      "vector search",
+      "semantic search",
+      "rag"
+    ],
+    "related": [
+      "responses-api.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Embeddings",
+    "header2": "Common Mistakes",
+    "header3": null,
+    "text": "- Embedding entire books or very large files as one vector.\n- Mixing different embedding models in the same index.\n- Omitting metadata.",
+    "embedding_text": "Title: Embeddings\nCategory: Core API\nSection: Common Mistakes\n\nContent:\n- Embedding entire books or very large files as one vector.\n- Mixing different embedding models in the same index.\n- Omitting metadata."
+  },
+  {
+    "id": "b8872cec7367fe50ac27f45327bb123c",
+    "filename": "embeddings.md",
+    "title": "Embeddings",
+    "category": "Core API",
+    "audience": "Developers",
+    "topics": [
+      "embeddings",
+      "vector search",
+      "semantic search",
+      "rag"
+    ],
+    "related": [
+      "responses-api.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Embeddings",
+    "header2": "FAQ",
+    "header3": "Are embeddings readable?",
+    "text": "No. They are numerical representations, not text.",
+    "embedding_text": "Title: Embeddings\nCategory: Core API\nSection: FAQ\n\nContent:\nNo. They are numerical representations, not text."
+  },
+  {
+    "id": "3377092957c5aacdd27d7b596f84acf8",
+    "filename": "embeddings.md",
+    "title": "Embeddings",
+    "category": "Core API",
+    "audience": "Developers",
+    "topics": [
+      "embeddings",
+      "vector search",
+      "semantic search",
+      "rag"
+    ],
+    "related": [
+      "responses-api.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Embeddings",
+    "header2": "FAQ",
+    "header3": "Can embeddings generate answers?",
+    "text": "No. Embeddings support retrieval. Language models generate the final answer.",
+    "embedding_text": "Title: Embeddings\nCategory: Core API\nSection: FAQ\n\nContent:\nNo. Embeddings support retrieval. Language models generate the final answer."
+  },
+  {
+    "id": "b53a88158dd3c0fc61df3b3d8af132c8",
+    "filename": "embeddings.md",
+    "title": "Embeddings",
+    "category": "Core API",
+    "audience": "Developers",
+    "topics": [
+      "embeddings",
+      "vector search",
+      "semantic search",
+      "rag"
+    ],
+    "related": [
+      "responses-api.md",
+      "models.md"
+    ],
+    "last_updated": "2026-07",
+    "header1": "Embeddings",
+    "header2": "Summary",
+    "header3": null,
+    "text": "Embeddings are the foundation of semantic search and RAG systems. They allow applications to retrieve relevant information efficiently before asking a language model to generate a grounded response.",
+    "embedding_text": "Title: Embeddings\nCategory: Core API\nSection: Summary\n\nContent:\nEmbeddings are the foundation of semantic search and RAG systems. They allow applications to retrieve relevant information efficiently before asking a language model to generate a grounded response."
+  }
+]
