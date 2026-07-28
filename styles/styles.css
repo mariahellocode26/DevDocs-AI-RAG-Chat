@@ -1,0 +1,488 @@
+/* ==========================================================
+   Reduce Streamlit default spacing
+========================================================== */
+
+.block-container{
+    padding-top:0rem;
+    padding-bottom:1rem;
+}
+
+
+/* ==========================================================
+   DevDocs AI RAG Chat
+   Pastel Theme
+   ========================================================== */
+
+/* ----------------------------------------------------------
+   Color Palette
+---------------------------------------------------------- */
+
+
+
+:root {
+
+    --background: #F7F6FB;
+
+    --card: #FFFFFF;
+
+    --border: #E7E3EF;
+
+    --primary: #C9BEDC;
+
+    --primary-dark: #B7A8D2;
+
+    --secondary: #EEE7F8;
+
+    --text: #2D2D2D;
+
+    --muted: #6F6F6F;
+
+    --chat-user: #ECE5F8;
+
+    --chat-assistant: #FFFFFF;
+
+    --shadow:
+        0 4px 12px rgba(120,120,120,.08);
+
+    --radius:16px;
+
+}
+
+
+/* ==========================================================
+   Global
+========================================================== */
+
+html,
+body,
+.stApp{
+
+    background:var(--background);
+
+    color:var(--text);
+
+    font-family:
+        Inter,
+        "Segoe UI",
+        sans-serif;
+
+}
+
+
+/* ==========================================================
+   Remove Streamlit padding
+========================================================== */
+
+.block-container{
+
+    padding-top:2rem;
+
+    padding-left:2rem;
+
+    padding-right:2rem;
+
+    padding-bottom:1rem;
+
+}
+
+
+/* ==========================================================
+   Sidebar
+========================================================== */
+
+section[data-testid="stSidebar"]{
+
+    background:#FCFBFE;
+
+    border-right:1px solid var(--border);
+
+}
+
+section[data-testid="stSidebar"] .block-container{
+
+    padding-top:1rem;
+
+}
+
+/* Sidebar padding */
+
+section[data-testid="stSidebar"] > div:first-child {
+    padding-top: 1.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+/* ==========================================================
+   Sidebar Width
+========================================================== */
+
+[data-testid="stSidebar"]{
+    width:200px !important;
+    min-width:200px !important;
+}
+
+[data-testid="stSidebarContent"]{
+    padding-top:1rem;
+}
+
+/* ==========================================================
+   Buttons
+========================================================== */
+
+.stButton>button{
+
+    width:100%;
+
+    border-radius:12px;
+
+    border:none;
+
+    background:white;
+
+    color:var(--text);
+
+    transition:.25s;
+
+    padding:.65rem;
+
+    box-shadow:var(--shadow);
+
+}
+
+.stButton>button:hover{
+
+    background:var(--primary);
+
+    color:white;
+
+}
+
+
+/* ==========================================================
+   Chat Input
+========================================================== */
+
+div[data-testid="stChatInput"]{
+
+    margin-top:1rem;
+
+}
+
+div[data-testid="stChatInput"] textarea{
+
+    border-radius:18px !important;
+
+    border:1px solid var(--border) !important;
+
+    background:white !important;
+
+}
+
+
+/* ==========================================================
+   Chat Messages
+========================================================== */
+
+[data-testid="stChatMessage"]{
+
+    background:white;
+
+    border-radius:18px;
+
+    border:1px solid var(--border);
+
+    padding:1rem;
+
+    margin-bottom:1rem;
+
+    box-shadow:var(--shadow);
+
+}
+
+
+/* ==========================================================
+   User Messages
+========================================================== */
+
+[data-testid="stChatMessage"][data-testid*="user"]{
+
+    background:var(--chat-user);
+
+}
+
+
+/* ==========================================================
+   Assistant Messages
+========================================================== */
+
+[data-testid="stChatMessage"][data-testid*="assistant"]{
+
+    background:var(--chat-assistant);
+
+}
+
+
+/* ==========================================================
+   Code Blocks
+========================================================== */
+
+pre{
+
+    border-radius:12px;
+
+}
+
+code{
+
+    font-size:.92rem;
+
+}
+
+
+/* ==========================================================
+   Expander
+========================================================== */
+
+.streamlit-expanderHeader{
+
+    font-weight:600;
+
+}
+
+
+/* ==========================================================
+   Metrics Card
+========================================================== */
+
+.metric-card{
+
+    background:white;
+
+    border-radius:14px;
+
+    padding:14px;
+
+    border:1px solid var(--border);
+
+    box-shadow:var(--shadow);
+
+}
+
+
+/* ==========================================================
+   Source Card
+========================================================== */
+
+.source-card{
+
+    background:white;
+
+    border-radius:14px;
+
+    border:1px solid var(--border);
+
+    padding:10px;
+
+    margin-bottom:12px;
+
+    box-shadow:var(--shadow);
+
+    transition:.2s;
+
+}
+
+.source-card:hover{
+
+    transform:translateY(-2px);
+
+}
+
+
+/* ==========================================================
+   File Name
+========================================================== */
+
+.filename{
+
+    font-weight:700;
+
+    color:var(--primary-dark);
+
+}
+
+
+/* ==========================================================
+   Similarity Badge
+========================================================== */
+
+.badge{
+
+    display:inline-block;
+
+    background:var(--secondary);
+
+    color:#5F4F83;
+
+    padding:4px 10px;
+
+    border-radius:999px;
+
+    font-size:.75rem;
+
+    font-weight:600;
+
+}
+
+
+/* ==========================================================
+   Header Card
+========================================================== */
+
+.hero{
+
+    background:white;
+
+    border-radius:10px;
+
+    border:1px solid var(--border);
+
+    padding:10px;
+
+    margin-bottom:10px;
+
+    box-shadow:var(--shadow);
+
+}
+
+.hero h1{
+
+    margin:0;
+
+}
+
+.hero p{
+
+    color:var(--muted);
+
+    margin-top:0px;
+
+}
+
+
+/* ==========================================================
+   Status Pills
+========================================================== */
+
+.status{
+
+    display:inline-block;
+
+    background:var(--secondary);
+
+    color:#67548B;
+
+    padding:5px 12px;
+
+    border-radius:999px;
+
+    font-size:.75rem;
+
+}
+
+
+/* ==========================================================
+   Scrollbar
+========================================================== */
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:transparent;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#D9D1E8;
+
+    border-radius:999px;
+
+}
+
+
+/* ==========================================================
+   Horizontal Rule
+========================================================== */
+
+hr{
+
+    border:none;
+
+    border-top:1px solid var(--border);
+
+}
+
+
+/* ==========================================================
+   Links
+========================================================== */
+
+a{
+
+    color:#7862AA;
+
+    text-decoration:none;
+
+}
+
+a:hover{
+
+    text-decoration:underline;
+
+}
+
+
+/* ==========================================================
+   Responsive
+========================================================== */
+
+@media (max-width:900px){
+
+    .block-container{
+
+        padding-left:1rem;
+
+        padding-right:1rem;
+
+    }
+
+}
+
+
+
+/* ===========================================
+   Header
+=========================================== */
+
+.app-header {
+    padding: 0.5rem 0 0.75rem 0;
+}
+
+.app-header h3 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2E2A47;
+}
+
+.app-header p {
+    margin-top: 0.35rem;
+    color: #7A7890;
+    font-size: 0.95rem;
+}
+
