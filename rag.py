@@ -99,28 +99,38 @@ QUESTION
 # Ask OpenAI
 # ============================================================
 
+INPUT_COST_PER_MILLION = 0.75
+OUTPUT_COST_PER_MILLION = 4.50
+
+
 def ask_llm(prompt):
 
-    response = client.chat.completions.create(
-
+    response = client.responses.create(
         model=MODEL_NAME,
-
-        messages=[
-            {
-                "role": "system",
-                "content":
-                    "You answer questions using the supplied documentation."
-            },
-            {
-                "role": "user",
-                "content": prompt,
-            }
-        ],
-
+        input=prompt,
         temperature=0,
     )
 
-    return response.choices[0].message.content
+    usage = response.usage
+
+    input_tokens = usage.input_tokens
+    output_tokens = usage.output_tokens
+    total_tokens = usage.total_tokens
+
+    cost_usd = (
+        (input_tokens / 1_000_000) * INPUT_COST_PER_MILLION +
+        (output_tokens / 1_000_000) * OUTPUT_COST_PER_MILLION
+    )
+
+    return {
+        "answer": response.output_text,
+        "usage": {
+            "input_tokens": input_tokens,
+            "output_tokens": output_tokens,
+            "total_tokens": total_tokens,
+        },
+        "cost_usd": round(cost_usd, 6),
+    }
 
 
 # ============================================================
@@ -138,14 +148,17 @@ def rag(question):
 
     prompt = build_prompt(question, context)
 
-    answer = ask_llm(prompt)
+    llm_result = ask_llm(prompt)
 
     return {
-    "answer": answer,
-    "sources": retrieved_chunks,
-    "model": MODEL_NAME,
-    "top_k": TOP_K,
-}
+        "answer": llm_result["answer"],
+        "sources": retrieved_chunks,
+        "model": MODEL_NAME,
+        "top_k": TOP_K,
+        "usage": llm_result["usage"],
+        "cost_usd": llm_result["cost_usd"],
+    }
+
 
 
 # ============================================================

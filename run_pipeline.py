@@ -1,57 +1,21 @@
-"""
-run_pipeline.py
-
-Runs every question in ground_truth.csv through:
-    - text_search.search()      (lexical / MinSearch retrieval)
-    - vector_search.search()    (semantic retrieval)
-    - rag.rag()                 (full retrieval + generation pipeline)
-
-and saves the raw, unscored outputs to results/raw_runs.json.
-
-Scoring (hit rate, MRR, LLM-as-judge, etc.) happens later in
-evaluate_retrieval.py / evaluate_generation.py, reading this file.
-Kept separate so we don't have to re-run the (slow, costly) actual
-RAG calls every time we tweak a metric formula.
-
-IMPORTANT:
-    text_search.py and vector_search.py load processed_chunks.json /
-    chunks_with_embeddings.json from the CURRENT WORKING DIRECTORY at
-    import time. Run this script from the directory containing those
-    two files, e.g.:
-
-        cd /path/to/project
-        python evaluation/run_pipeline.py
-
-Usage:
-    python run_pipeline.py
-    python run_pipeline.py --limit 5          # quick smoke test
-    python run_pipeline.py --top-k 3
-    python run_pipeline.py --delay 5          # slower, for free-tier accounts
-
-Rate limits:
-    Free-tier / newly created OpenAI accounts have low requests-per-minute
-    limits (check yours at platform.openai.com -> Settings -> Limits).
-    This script waits --delay seconds before every LLM call, and on a 429
-    rate-limit error retries automatically with exponential backoff
-    (up to MAX_RETRIES attempts) instead of crashing the run.
-"""
-
+# evaluation/run_pipeline.py
+import time
+import sys
 import argparse
 import csv
 import json
 import time
 import traceback
+from collections import deque
 from pathlib import Path
 
-import openai
-
-# These imports build the search indexes immediately (they load the
-# processed_chunks.json / chunks_with_embeddings.json files and print
-# "Loading...", "Building index...", etc. to stdout). That's expected.
 import text_search
 import vector_search
 import rag as rag_module
 
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(PROJECT_ROOT))
 
 # ============================================================
 # Configuration
@@ -63,14 +27,54 @@ RESULTS_FILE = RESULTS_DIR / "raw_runs.json"
 
 DEFAULT_TOP_K = 5
 
-# Free-tier / low-tier OpenAI accounts have low requests-per-minute
-# limits. A fixed delay between LLM calls plus retry-with-backoff on
-# 429s keeps this script from failing a run just because it went too
-# fast. Tune --delay to whatever your account's dashboard shows
-# (platform.openai.com -> Settings -> Limits).
-DEFAULT_DELAY_SECONDS = 3.0
-MAX_RETRIES = 5
-BACKOFF_BASE_SECONDS = 5.0
+# OpenAI limit for your free account
+TPM_LIMIT = 100_000
+WINDOW_SECONDS = 60
+
+
+# ============================================================
+# TPM Limiter
+# ============================================================
+
+token_window = deque()
+
+
+def throttle_tpm(estimated_tokens: int):
+    """
+    Ensure we do not exceed the TPM limit.
+    Uses a rolling 60-second window.
+    """
+
+    now = time.time()
+
+    # Remove expired entries
+    while token_window and now - token_window[0][0] > WINDOW_SECONDS:
+        token_window.popleft()
+
+    used_last_minute = sum(tokens for _, tokens in token_window)
+
+    if used_last_minute + estimated_tokens <= TPM_LIMIT:
+        return
+
+    # Wait until enough tokens expire
+    while token_window:
+        oldest_time, _ = token_window[0]
+
+        sleep_time = WINDOW_SECONDS - (now - oldest_time)
+
+        if sleep_time > 0:
+            print(f"TPM limit reached. Sleeping {sleep_time:.1f}s...")
+            time.sleep(sleep_time)
+
+        now = time.time()
+
+        while token_window and now - token_window[0][0] > WINDOW_SECONDS:
+            token_window.popleft()
+
+        used_last_minute = sum(tokens for _, tokens in token_window)
+
+        if used_last_minute + estimated_tokens <= TPM_LIMIT:
+            return
 
 
 # ============================================================
@@ -84,14 +88,8 @@ def load_ground_truth(path):
 
 def find_rank(retrieved_chunks, reference_document, reference_section):
     """
-    Return the 1-indexed rank of the first chunk that matches both
-    the reference document and reference section, or None if no
-    match is found in the retrieved list.
-
-    A chunk matches if:
-        chunk["filename"] == reference_document
-        AND reference_section is (case-insensitively) equal to
-            chunk["header1"], chunk["header2"], or chunk["header3"]
+    Return the 1-indexed rank of the first chunk matching
+    both document and section.
     """
 
     target_doc = reference_document.strip().lower()
@@ -118,8 +116,8 @@ def find_rank(retrieved_chunks, reference_document, reference_section):
 
 def strip_embeddings(chunks):
     """
-    vector_search results include a raw embedding vector per chunk.
-    We don't want that bloating raw_runs.json - drop it, keep the score.
+    Remove raw embedding vectors from results to keep
+    raw_runs.json small.
     """
 
     cleaned = []
@@ -132,43 +130,11 @@ def strip_embeddings(chunks):
     return cleaned
 
 
-def call_rag_with_backoff(question):
-    """
-    Call rag_module.rag(question), retrying with exponential backoff
-    if OpenAI returns a rate-limit (429) error. Raises after
-    MAX_RETRIES failed attempts.
-    """
-
-    for attempt in range(1, MAX_RETRIES + 1):
-        try:
-            return rag_module.rag(question)
-
-        except openai.RateLimitError:
-            if attempt == MAX_RETRIES:
-                raise
-
-            wait = BACKOFF_BASE_SECONDS * (2 ** (attempt - 1))
-            print(f"    -> Rate limited (attempt {attempt}/{MAX_RETRIES}), "
-                  f"waiting {wait:.0f}s...")
-            time.sleep(wait)
-
-
 # ============================================================
 # Per-question run
 # ============================================================
 
-def run_one(row, top_k, delay_seconds):
-    """
-    Run a single ground truth question through both retrievers and
-    the full RAG pipeline. Returns a result dict. Never raises -
-    errors are captured in the result so one bad question doesn't
-    kill the whole batch.
-
-    delay_seconds is applied before the LLM call (not before the
-    local text/vector search calls, which don't hit any external
-    rate limit).
-    """
-
+def run_one(row, top_k):
     question = row["question"]
     reference_document = row["reference_document"]
     reference_section = row["reference_section"]
@@ -182,42 +148,85 @@ def run_one(row, top_k, delay_seconds):
         "error": None,
     }
 
-    # --- Text search ---
+    # -----------------------------
+    # Text search
+    # -----------------------------
     try:
         text_results = text_search.search(query=question, top_k=top_k)
+
         result["text_search"] = {
             "results": text_results,
             "correct_rank": find_rank(
-                text_results, reference_document, reference_section
+                text_results,
+                reference_document,
+                reference_section,
             ),
         }
-    except Exception as e:
-        result["text_search"] = {"results": [], "correct_rank": None}
-        result["error"] = f"text_search failed: {e}\n{traceback.format_exc()}"
 
-    # --- Vector search ---
+    except Exception as e:
+        result["text_search"] = {
+            "results": [],
+            "correct_rank": None,
+        }
+
+        result["error"] = (
+            f"text_search failed: {e}\\n{traceback.format_exc()}"
+        )
+
+    # -----------------------------
+    # Vector search
+    # -----------------------------
     try:
-        vector_results = vector_search.search(query=question, top_k=top_k)
+        vector_results = vector_search.search(
+            query=question,
+            top_k=top_k,
+        )
+
         vector_results = strip_embeddings(vector_results)
+
         result["vector_search"] = {
             "results": vector_results,
             "correct_rank": find_rank(
-                vector_results, reference_document, reference_section
+                vector_results,
+                reference_document,
+                reference_section,
             ),
         }
-    except Exception as e:
-        result["vector_search"] = {"results": [], "correct_rank": None}
-        result["error"] = f"vector_search failed: {e}\n{traceback.format_exc()}"
 
-    # --- Full RAG pipeline (retrieval + generation) ---
+    except Exception as e:
+        result["vector_search"] = {
+            "results": [],
+            "correct_rank": None,
+        }
+
+        result["error"] = (
+            f"vector_search failed: {e}\\n{traceback.format_exc()}"
+        )
+
+    # -----------------------------
+    # Full RAG pipeline
+    # -----------------------------
     try:
-        time.sleep(delay_seconds)
+        # Conservative estimate before the request
+        throttle_tpm(3000)
 
         start = time.perf_counter()
-        rag_output = call_rag_with_backoff(question)
+
+        rag_output = rag_module.rag(question)
+        time.sleep(6.5)
+
         latency = time.perf_counter() - start
 
-        sources = strip_embeddings(rag_output.get("sources", []))
+        usage = rag_output.get("usage", {})
+
+        actual_tokens = usage.get("total_tokens", 0)
+
+        # Record real token usage
+        token_window.append((time.time(), actual_tokens))
+
+        sources = strip_embeddings(
+            rag_output.get("sources", [])
+        )
 
         result["rag"] = {
             "answer": rag_output.get("answer"),
@@ -225,18 +234,28 @@ def run_one(row, top_k, delay_seconds):
             "top_k": rag_output.get("top_k"),
             "sources": sources,
             "correct_rank": find_rank(
-                sources, reference_document, reference_section
+                sources,
+                reference_document,
+                reference_section,
             ),
-            "latency_seconds": latency,
+            "latency_seconds": round(latency, 3),
+            "usage": usage,
+            "cost_usd": rag_output.get("cost_usd", 0.0),
         }
+
     except Exception as e:
         result["rag"] = {
             "answer": None,
             "sources": [],
             "correct_rank": None,
             "latency_seconds": None,
+            "usage": {},
+            "cost_usd": 0.0,
         }
-        result["error"] = f"rag failed: {e}\n{traceback.format_exc()}"
+
+        result["error"] = (
+            f"rag failed: {e}\\n{traceback.format_exc()}"
+        )
 
     return result
 
@@ -248,21 +267,23 @@ def run_one(row, top_k, delay_seconds):
 def main():
 
     parser = argparse.ArgumentParser(
-        description="Run ground_truth.csv questions through the RAG pipeline."
+        description="Run ground_truth.csv through the RAG pipeline."
     )
+
     parser.add_argument(
-        "--limit", type=int, default=None,
-        help="Only run the first N questions (useful for a quick smoke test)."
+        "--limit",
+        type=int,
+        default=None,
+        help="Only run the first N questions.",
     )
+
     parser.add_argument(
-        "--top-k", type=int, default=DEFAULT_TOP_K,
-        help=f"Number of chunks to retrieve per question (default: {DEFAULT_TOP_K})."
+        "--top-k",
+        type=int,
+        default=DEFAULT_TOP_K,
+        help=f"Number of chunks to retrieve (default: {DEFAULT_TOP_K}).",
     )
-    parser.add_argument(
-        "--delay", type=float, default=DEFAULT_DELAY_SECONDS,
-        help=f"Seconds to wait before each LLM call, to stay under free-tier "
-             f"rate limits (default: {DEFAULT_DELAY_SECONDS})."
-    )
+
     args = parser.parse_args()
 
     ground_truth = load_ground_truth(GROUND_TRUTH_FILE)
@@ -270,19 +291,39 @@ def main():
     if args.limit:
         ground_truth = ground_truth[: args.limit]
 
-    print(f"Running {len(ground_truth)} questions "
-          f"(top_k={args.top_k}, delay={args.delay}s between LLM calls)...\n")
+    print(f"Running {len(ground_truth)} questions (top_k={args.top_k})...\\n")
 
     results = []
 
+    total_input_tokens = 0
+    total_output_tokens = 0
+    total_cost = 0.0
+
     for i, row in enumerate(ground_truth, start=1):
+
         print(f"[{i}/{len(ground_truth)}] {row['question'][:70]}...")
 
-        result = run_one(row, top_k=args.top_k, delay_seconds=args.delay)
+        result = run_one(row, top_k=args.top_k)
+
         results.append(result)
 
+        rag_result = result.get("rag", {})
+
+        usage = rag_result.get("usage", {})
+
+        total_input_tokens += usage.get("input_tokens", 0)
+        total_output_tokens += usage.get("output_tokens", 0)
+        total_cost += rag_result.get("cost_usd", 0.0)
+
         if result["error"]:
-            print(f"    -> ERROR: {result['error'].splitlines()[0]}")
+            print(f"    ERROR: {result['error'].splitlines()[0]}")
+
+        else:
+            print(
+                f"    {usage.get('total_tokens', 0)} tokens | "
+                f"${rag_result.get('cost_usd', 0.0):.4f} | "
+                f"{rag_result.get('latency_seconds')}s"
+            )
 
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -290,9 +331,20 @@ def main():
         json.dump(results, f, indent=2, ensure_ascii=False)
 
     n_errors = sum(1 for r in results if r["error"])
-    print(f"\nDone. Saved {len(results)} results to {RESULTS_FILE}")
+
+    print("\\n" + "=" * 60)
+    print("Evaluation Summary")
+    print("=" * 60)
+
+    print(f"Questions:      {len(results)}")
+    print(f"Input tokens:   {total_input_tokens:,}")
+    print(f"Output tokens:  {total_output_tokens:,}")
+    print(f"Total tokens:   {total_input_tokens + total_output_tokens:,}")
+    print(f"Total cost:     ${total_cost:.4f}")
+    print(f"Results file:   {RESULTS_FILE}")
+
     if n_errors:
-        print(f"({n_errors} question(s) had errors - check the 'error' field)")
+        print(f"Errors:         {n_errors}")
 
 
 if __name__ == "__main__":
