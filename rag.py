@@ -21,8 +21,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # from hybrid_search import search
-from text_search import search
-# from vector_search import search
+# from text_search import search
+from vector_search import search
 
 
 # ============================================================

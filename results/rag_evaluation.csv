@@ -1,0 +1,143 @@
+id,question,reference_path,expected_answer,generated_answer,correctness,groundedness,hallucination,root_cause,notes
+1,Why is authentication required for OpenAI API requests?,Authentication > Overview,"Authentication allows OpenAI to identify your project, apply usage limits, attribute billing correctly, and authorize access to models and services.","Authentication is required so OpenAI can identify your project, apply usage limits, attribute billing correctly, and authorize access to models and services.",,,,,
+2,What header must be included in every authenticated OpenAI API request?,Authentication > How Authentication Works,Every request includes an Authorization header: Authorization: Bearer YOUR_API_KEY. The server validates the key before processing the request.,"Every authenticated OpenAI API request must include an `Authorization` header:
+
+```text
+Authorization: Bearer YOUR_API_KEY
+```",,,,,
+3,What is the recommended way to store an OpenAI API key in Python applications?,Authentication > Storing API Keys Securely,"Avoid hardcoding keys. Instead, store them in environment variables and access them with os.environ.","The recommended way is to store the API key in an environment variable, such as `OPENAI_API_KEY`, and read it in Python with `os.environ[""OPENAI_API_KEY""]` rather than hardcoding it in source code.",,,,,
+4,What are some possible causes of an invalid API key error?,Authentication > Common Errors > Invalid API Key,Typo; Deleted or inactive key.,"Some possible causes of an invalid API key error are:
+
+- A typo
+- A deleted or inactive key",,,,,
+5,Can I expose my API key in browser JavaScript?,Authentication > FAQ > Can I expose my API key in browser JavaScript?,No. Always send requests through a trusted backend.,No. Always send requests through a trusted backend.,,,,,
+6,What types of applications commonly use embeddings?,Embeddings > Common Uses,"Semantic search, document retrieval, question answering, recommendation systems, and clustering and classification.","Embeddings are commonly used for:
+
+- Semantic search
+- Document retrieval
+- Question answering
+- Recommendation systems
+- Clustering and classification",,,,,
+7,What are the main steps in a typical RAG workflow that uses embeddings?,Embeddings > Typical RAG Workflow,1. Load documents. 2. Split documents into chunks. 3. Create an embedding for each chunk. 4. Store vectors in a vector database. 5. Embed the user's question. 6. Retrieve the nearest chunks. 7. Send the retrieved context to the Responses API.,"A typical RAG workflow using embeddings is:
+
+1. Load documents.  
+2. Split documents into chunks.  
+3. Create an embedding for each chunk.  
+4. Store vectors in a vector database.  
+5. Embed the user's question.  
+6. Retrieve the nearest chunks.  
+7. Send the retrieved context to the Responses API.",,,,,
+8,How is similarity search performed in an embeddings-based system?,Embeddings > Similarity Search,"When a user asks a question, create an embedding for the query and compare it with stored document vectors using a similarity metric such as cosine similarity.",Similarity search is performed by creating an embedding for the user’s query and comparing it with stored document vectors using a similarity metric such as cosine similarity.,,,,,
+9,What should you do if you switch to a different embedding model?,Embeddings > Best Practices,Re-embed documents if you change embedding models.,"If you change embedding models, you should **re-embed your documents**.",,,,,
+10,Can embeddings generate answers directly?,Embeddings > FAQ > Can embeddings generate answers?,No. Embeddings support retrieval. Language models generate the final answer.,"No. Embeddings support retrieval, and language models generate the final answer.",,,,,
+11,What kinds of tasks can function calling help automate?,Function Calling > Common Use Cases,"Weather lookups, database queries, calendar events, order status, and internal business APIs.","Function calling can help automate tasks that require external data or actions, such as:
+
+- Retrieving live information
+- Performing actions
+- Combining LLM reasoning with business logic in a controlled and secure way",,,,,
+12,What are the steps involved in the basic function-calling workflow?,Function Calling > Basic Flow,1. Send the user's question and tool definitions. 2. The model decides whether a tool is needed. 3. Your application executes the requested function. 4. Return the tool result to the model. 5. The model generates the final answer.,"The basic function-calling workflow is:
+
+1. Send the user's question and tool definitions.
+2. The model decides whether a tool is needed.
+3. Your application executes the requested function.
+4. Return the tool result to the model.
+5. The model generates the final answer.",,,,,
+13,What are some recommended practices when implementing function calling?,Function Calling > Best Practices,Keep tool descriptions clear. Validate all function arguments. Handle failures gracefully. Return structured data. Only expose trusted functions.,"Recommended practices include:
+
+- Keep tool descriptions clear.
+- Validate all function arguments.
+- Handle failures gracefully.
+- Return structured data.
+- Only expose trusted functions.",,,,,
+14,What mistakes should developers avoid when using function calling?,Function Calling > Common Mistakes,"Letting the model execute arbitrary code, skipping argument validation, and returning inconsistent data formats.","Developers should avoid:
+
+- Letting the model execute arbitrary code
+- Skipping argument validation
+- Returning inconsistent data formats",,,,,
+15,Does the language model execute application code directly?,Function Calling > FAQ > Does the model execute my code?,No. Your application executes the function after receiving the tool call.,No. Your application executes the function after receiving the tool call.,,,,,
+16,What factors should be considered when selecting a model for an application?,Models > Choosing a Model,"Consider task complexity, response quality, latency requirements, cost, context window, and multimodal support.","When selecting a model, consider:
+
+- Task complexity
+- Response quality
+- Latency requirements
+- Cost
+- Context window
+- Multimodal support",,,,,
+17,What types of tasks are language models commonly used for?,Models > Model Categories > Language Models,"Language models are used for chatbots, question answering, summarization, content generation, and code assistance.","Language models are commonly used for:
+
+- Chatbots
+- Question answering
+- Summarization
+- Content generation
+- Code assistance",,,,,
+18,What are embedding models used for?,Models > Model Categories > Embedding Models,"Embedding models convert text into numerical vectors for semantic search, Retrieval-Augmented Generation (RAG), recommendation systems, and clustering.","Embedding models convert text into numerical vectors for:
+
+- Semantic search
+- Retrieval-Augmented Generation (RAG)
+- Recommendation systems
+- Clustering
+
+They are also used for:
+
+- Semantic search
+- Document retrieval
+- Question answering
+- Recommendation systems
+- Clustering and classification",,,,,
+19,What are some common mistakes developers make when choosing or using models?,Models > Common Mistakes,"Using a language model to generate embeddings, mixing embedding models within the same vector index, and choosing the largest model for every task.","Some common mistakes are:
+
+- Using a language model to generate embeddings.
+- Mixing embedding models within the same vector index.
+- Choosing the largest model for every task.",,,,,
+20,Which models are typically combined in a RAG system?,Models > FAQ > Which model should I use for RAG?,A common architecture combines an embedding model for retrieval with a language model for answer generation.,A RAG system typically combines an **embedding model** for retrieval with a **language model** for answer generation.,,,,,
+21,What capabilities does the Responses API support?,Responses API > Overview,"It supports text generation, structured outputs, multimodal inputs, streaming, and tool calling.","The Responses API supports:
+
+- text generation
+- structured outputs
+- multimodal inputs
+- streaming
+- tool calling",,,,,
+22,What information can be included in a Responses API request?,Responses API > Request Components,"A request can include the model, input, tools, stream, temperature, and max_output_tokens fields.","A Responses API request can include:
+
+- `model` — model to use
+- `input` — prompt or conversation
+- `tools` — optional tool definitions
+- `stream` — enable streaming
+- `temperature` — controls randomness, if supported
+- `max_output_tokens` — limits output length",,,,,
+23,What kinds of prompts can be passed as input to the Responses API?,Responses API > Understanding Input,The input can be a simple prompt or a long-form prompt containing detailed instructions and retrieved context for RAG applications.,The context says the `input` can be a **prompt or conversation**. It also gives an example of a **simple prompt** and notes that **long-form prompts** may include detailed instructions and retrieved context for RAG applications.,,,,,
+24,What are some best practices when working with the Responses API?,Responses API > Best Practices,"Keep prompts focused, reuse the client object, log latency and token usage, handle API errors gracefully, and send only relevant context in RAG systems.","Some best practices are:
+
+- Keep prompts focused.
+- Reuse the client object.
+- Log latency and token usage.
+- Handle API errors gracefully.
+- Send only relevant context in RAG systems.",,,,,
+25,How does the Responses API fit into a Retrieval-Augmented Generation pipeline?,Responses API > Responses API in RAG,"In a RAG pipeline, the user question is processed by a retriever, relevant chunks are passed to a prompt builder, and the Responses API generates the final answer.","In a Retrieval-Augmented Generation pipeline, the Responses API is used after retrieval and prompt building:
+
+1. User question
+2. Retriever finds relevant chunks
+3. Prompt builder assembles the prompt
+4. Responses API generates the answer
+
+So, it serves as the generation step that produces the final answer from the retrieved context.",,,,,
+26,Why does streaming improve the user experience?,Streaming > Overview,Streaming allows an application to receive a model's output incrementally instead of waiting for the complete response. This improves perceived responsiveness and provides a better user experience for longer generations.,"Streaming improves the user experience because it delivers the model’s output incrementally instead of waiting for the full response, so users see results sooner and the application feels more responsive.",,,,,
+27,In which situations is streaming particularly useful?,Streaming > Why Use Streaming?,"Streaming is useful when responses are long, low perceived latency is important, building chat applications, and displaying generated text as it arrives.","Streaming is particularly useful when:
+
+- Responses are long
+- Low perceived latency is important
+- Building chat applications
+- Displaying generated text as it arrives",,,,,
+28,What steps do applications typically follow when handling streaming responses?,Streaming > Handling Events,"Applications typically open a streaming connection, process incoming events, append new text to the UI, detect completion, and close the stream.","Applications typically:
+
+1. Open a streaming connection.  
+2. Process incoming events.  
+3. Append new text to the UI.  
+4. Detect completion.  
+5. Close the stream.",,,,,
+29,What mistakes should developers avoid when implementing streaming?,Streaming > Common Mistakes,"Assuming the full response arrives in one event, ignoring connection errors, and blocking the UI while waiting for tokens.","Developers should avoid:
+
+- Assuming the full response arrives in one event.
+- Ignoring connection errors.
+- Blocking the UI while waiting for tokens.",,,,,
+30,Can streaming be used with Retrieval-Augmented Generation (RAG)?,Streaming > FAQ > Can streaming be used with RAG?,"Yes. Retrieve relevant context first, then stream the generated answer.","Yes. Retrieve relevant context first, then stream the generated answer.",,,,,
