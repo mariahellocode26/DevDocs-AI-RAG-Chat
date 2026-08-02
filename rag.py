@@ -15,7 +15,6 @@ Prompt OpenAI
     ↓
 Generate answer
 """
-
 from openai import OpenAI
 from dotenv import load_dotenv
 load_dotenv()
@@ -149,6 +148,7 @@ def rag(question):
     prompt = build_prompt(question, context)
 
     llm_result = ask_llm(prompt)
+
 
     return {
         "answer": llm_result["answer"],

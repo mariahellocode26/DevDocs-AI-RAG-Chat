@@ -14,7 +14,7 @@ import time
 import streamlit as st
 
 from rag import ask_rag
-
+from monitoring.logger import log_request
 from components.sidebar import render_sidebar
 from components.header import render_header
 from components.chat import (
@@ -153,6 +153,19 @@ if (
                 result = ask_rag(question)
 
                 latency = time.perf_counter() - start
+
+                try:
+
+                    log_request(
+                        question=question,
+                        result=result,
+                        latency=latency,
+                    )
+
+                except Exception as e:
+
+                    print(f"Logging failed: {e}")
+                
 
             answer = result["answer"]
             sources = result["sources"]
