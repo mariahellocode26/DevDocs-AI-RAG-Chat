@@ -56,6 +56,12 @@ if css_file.exists():
 initialize_session()
 
 # ==========================================================
+# Global Header (Chat + Monitoring)
+# ==========================================================
+
+render_header()
+
+# ==========================================================
 # Sidebar
 # ==========================================================
 
@@ -88,7 +94,6 @@ chat_column, source_column = st.columns(
 
 with chat_column:
 
-    render_header()
 
     render_chat_history()
 
