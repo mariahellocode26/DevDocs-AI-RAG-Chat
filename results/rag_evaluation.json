@@ -7,7 +7,7 @@
         "generated_answer": "Authentication is required so OpenAI can identify your project, apply usage limits, attribute billing correctly, and authorize access to models and services.",
         "correctness": 5,
         "groundedness": 5,
-        "hallucination": no,
+        "hallucination": "no",
         "root_cause": NaN,
         "notes": NaN
     },
@@ -19,7 +19,7 @@
         "generated_answer": "Every authenticated OpenAI API request must include an `Authorization` header:\n\n```text\nAuthorization: Bearer YOUR_API_KEY\n```",
         "correctness": 5,
         "groundedness": 5,
-        "hallucination": no,
+        "hallucination": "no",
         "root_cause": NaN,
         "notes": NaN
     },
@@ -31,7 +31,7 @@
         "generated_answer": "The recommended way is to store the API key in an environment variable, such as `OPENAI_API_KEY`, and read it in Python with `os.environ[\"OPENAI_API_KEY\"]` rather than hardcoding it in source code.",
         "correctness": 5,
         "groundedness": 3,
-        "hallucination": yes,
+        "hallucination": "yes",
         "root_cause": NaN,
         "notes": NaN
     },
@@ -43,7 +43,7 @@
         "generated_answer": "Some possible causes of an invalid API key error are:\n\n- A typo\n- A deleted or inactive key",
         "correctness": 5,
         "groundedness": 5,
-        "hallucination": no,
+        "hallucination": "no",
         "root_cause": NaN,
         "notes": NaN
     },
@@ -55,7 +55,7 @@
         "generated_answer": "No. Always send requests through a trusted backend.",
         "correctness": 5,
         "groundedness": 5,
-        "hallucination": no,
+        "hallucination": "no",
         "root_cause": NaN,
         "notes": NaN
     },
@@ -67,7 +67,7 @@
         "generated_answer": "Embeddings are commonly used for:\n\n- Semantic search\n- Document retrieval\n- Question answering\n- Recommendation systems\n- Clustering and classification",
         "correctness": 5,
         "groundedness": 5,
-        "hallucination": no,
+        "hallucination": "no",
         "root_cause": NaN,
         "notes": NaN
     },
@@ -79,7 +79,7 @@
         "generated_answer": "A typical RAG workflow using embeddings is:\n\n1. Load documents.  \n2. Split documents into chunks.  \n3. Create an embedding for each chunk.  \n4. Store vectors in a vector database.  \n5. Embed the user's question.  \n6. Retrieve the nearest chunks.  \n7. Send the retrieved context to the Responses API.",
         "correctness": 5,
         "groundedness": 5,
-        "hallucination": no,
+        "hallucination": "no",
         "root_cause": NaN,
         "notes": NaN
     },
@@ -91,7 +91,7 @@
         "generated_answer": "Similarity search is performed by creating an embedding for the user’s query and comparing it with stored document vectors using a similarity metric such as cosine similarity.",
         "correctness": 4,
         "groundedness": 5,
-        "hallucination": no,
+        "hallucination": "no",
         "root_cause": NaN,
         "notes": NaN
     },
@@ -103,7 +103,7 @@
         "generated_answer": "If you change embedding models, you should **re-embed your documents**.",
         "correctness": 5,
         "groundedness": 5,
-        "hallucination": no,
+        "hallucination": "no",
         "root_cause": NaN,
         "notes": NaN
     },
@@ -115,7 +115,7 @@
         "generated_answer": "No. Embeddings support retrieval, and language models generate the final answer.",
         "correctness": 5,
         "groundedness": 5,
-        "hallucination": no,
+        "hallucination": "no",
         "root_cause": NaN,
         "notes": NaN
     },
@@ -127,7 +127,7 @@
         "generated_answer": "Function calling can help automate tasks that require external data or actions, such as:\n\n- Retrieving live information\n- Performing actions\n- Combining LLM reasoning with business logic in a controlled and secure way",
         "correctness": 2,
         "groundedness": 1,
-        "hallucination": yes,
+        "hallucination": "yes",
         "root_cause": NaN,
         "notes": NaN
     },
@@ -139,7 +139,7 @@
         "generated_answer": "The basic function-calling workflow is:\n\n1. Send the user's question and tool definitions.\n2. The model decides whether a tool is needed.\n3. Your application executes the requested function.\n4. Return the tool result to the model.\n5. The model generates the final answer.",
         "correctness": 5,
         "groundedness": 5,
-        "hallucination": no,
+        "hallucination": "no",
         "root_cause": NaN,
         "notes": NaN
     },
@@ -151,7 +151,7 @@
         "generated_answer": "Recommended practices include:\n\n- Keep tool descriptions clear.\n- Validate all function arguments.\n- Handle failures gracefully.\n- Return structured data.\n- Only expose trusted functions.",
         "correctness": 5,
         "groundedness": 5,
-        "hallucination": no,
+        "hallucination": "no",
         "root_cause": NaN,
         "notes": NaN
     },
@@ -163,7 +163,7 @@
         "generated_answer": "Developers should avoid:\n\n- Letting the model execute arbitrary code\n- Skipping argument validation\n- Returning inconsistent data formats",
         "correctness": 5,
         "groundedness": 5,
-        "hallucination": no,
+        "hallucination": "no",
         "root_cause": NaN,
         "notes": NaN
     },
@@ -175,7 +175,7 @@
         "generated_answer": "No. Your application executes the function after receiving the tool call.",
         "correctness": 5,
         "groundedness": 5,
-        "hallucination": no,
+        "hallucination": "no",
         "root_cause": NaN,
         "notes": NaN
     },
@@ -187,7 +187,7 @@
         "generated_answer": "When selecting a model, consider:\n\n- Task complexity\n- Response quality\n- Latency requirements\n- Cost\n- Context window\n- Multimodal support",
         "correctness": 5,
         "groundedness": 5,
-        "hallucination": no,
+        "hallucination": "no",
         "root_cause": NaN,
         "notes": NaN
     },
@@ -199,7 +199,7 @@
         "generated_answer": "Language models are commonly used for:\n\n- Chatbots\n- Question answering\n- Summarization\n- Content generation\n- Code assistance",
         "correctness": 5,
         "groundedness": 5,
-        "hallucination": no,
+        "hallucination": "no",
         "root_cause": NaN,
         "notes": NaN
     },
@@ -211,7 +211,7 @@
         "generated_answer": "Embedding models convert text into numerical vectors for:\n\n- Semantic search\n- Retrieval-Augmented Generation (RAG)\n- Recommendation systems\n- Clustering\n\nThey are also used for:\n\n- Semantic search\n- Document retrieval\n- Question answering\n- Recommendation systems\n- Clustering and classification",
         "correctness": 4,
         "groundedness": 3,
-        "hallucination": yes,
+        "hallucination": "yes",
         "root_cause": NaN,
         "notes": NaN
     },
@@ -223,7 +223,7 @@
         "generated_answer": "Some common mistakes are:\n\n- Using a language model to generate embeddings.\n- Mixing embedding models within the same vector index.\n- Choosing the largest model for every task.",
         "correctness": 5,
         "groundedness": 5,
-        "hallucination": no,
+        "hallucination": "no",
         "root_cause": NaN,
         "notes": NaN
     },
@@ -235,7 +235,7 @@
         "generated_answer": "A RAG system typically combines an **embedding model** for retrieval with a **language model** for answer generation.",
         "correctness": 4,
         "groundedness": 5,
-        "hallucination": no,
+        "hallucination": "no",
         "root_cause": NaN,
         "notes": NaN
     },
@@ -247,7 +247,7 @@
         "generated_answer": "The Responses API supports:\n\n- text generation\n- structured outputs\n- multimodal inputs\n- streaming\n- tool calling",
         "correctness": 5,
         "groundedness": 5,
-        "hallucination": no,
+        "hallucination": "no",
         "root_cause": NaN,
         "notes": NaN
     },
@@ -259,7 +259,7 @@
         "generated_answer": "A Responses API request can include:\n\n- `model` — model to use\n- `input` — prompt or conversation\n- `tools` — optional tool definitions\n- `stream` — enable streaming\n- `temperature` — controls randomness, if supported\n- `max_output_tokens` — limits output length",
         "correctness": 4,
         "groundedness": 3,
-        "hallucination": no,
+        "hallucination": "no",
         "root_cause": NaN,
         "notes": NaN
     },
@@ -269,9 +269,9 @@
         "reference_path": "Responses API > Understanding Input",
         "expected_answer": "The input can be a simple prompt or a long-form prompt containing detailed instructions and retrieved context for RAG applications.",
         "generated_answer": "The context says the `input` can be a **prompt or conversation**. It also gives an example of a **simple prompt** and notes that **long-form prompts** may include detailed instructions and retrieved context for RAG applications.",
-        "correctness": NaN,
-        "groundedness": NaN,
-        "hallucination": NaN,
+        "correctness": 4,
+        "groundedness": 5,
+        "hallucination": "no",
         "root_cause": NaN,
         "notes": NaN
     },
@@ -281,9 +281,9 @@
         "reference_path": "Responses API > Best Practices",
         "expected_answer": "Keep prompts focused, reuse the client object, log latency and token usage, handle API errors gracefully, and send only relevant context in RAG systems.",
         "generated_answer": "Some best practices are:\n\n- Keep prompts focused.\n- Reuse the client object.\n- Log latency and token usage.\n- Handle API errors gracefully.\n- Send only relevant context in RAG systems.",
-        "correctness": NaN,
-        "groundedness": NaN,
-        "hallucination": NaN,
+        "correctness": 5,
+        "groundedness": 5,
+        "hallucination": "no",
         "root_cause": NaN,
         "notes": NaN
     },
@@ -293,9 +293,9 @@
         "reference_path": "Responses API > Responses API in RAG",
         "expected_answer": "In a RAG pipeline, the user question is processed by a retriever, relevant chunks are passed to a prompt builder, and the Responses API generates the final answer.",
         "generated_answer": "In a Retrieval-Augmented Generation pipeline, the Responses API is used after retrieval and prompt building:\n\n1. User question\n2. Retriever finds relevant chunks\n3. Prompt builder assembles the prompt\n4. Responses API generates the answer\n\nSo, it serves as the generation step that produces the final answer from the retrieved context.",
-        "correctness": NaN,
-        "groundedness": NaN,
-        "hallucination": NaN,
+        "correctness": 4,
+        "groundedness": 5,
+        "hallucination": "no",
         "root_cause": NaN,
         "notes": NaN
     },
@@ -305,9 +305,9 @@
         "reference_path": "Streaming > Overview",
         "expected_answer": "Streaming allows an application to receive a model's output incrementally instead of waiting for the complete response. This improves perceived responsiveness and provides a better user experience for longer generations.",
         "generated_answer": "Streaming improves the user experience because it delivers the model’s output incrementally instead of waiting for the full response, so users see results sooner and the application feels more responsive.",
-        "correctness": NaN,
-        "groundedness": NaN,
-        "hallucination": NaN,
+        "correctness": 5,
+        "groundedness": 5,
+        "hallucination": "no",
         "root_cause": NaN,
         "notes": NaN
     },
@@ -317,9 +317,9 @@
         "reference_path": "Streaming > Why Use Streaming?",
         "expected_answer": "Streaming is useful when responses are long, low perceived latency is important, building chat applications, and displaying generated text as it arrives.",
         "generated_answer": "Streaming is particularly useful when:\n\n- Responses are long\n- Low perceived latency is important\n- Building chat applications\n- Displaying generated text as it arrives",
-        "correctness": NaN,
-        "groundedness": NaN,
-        "hallucination": NaN,
+        "correctness": 5,
+        "groundedness": 5,
+        "hallucination": "no",
         "root_cause": NaN,
         "notes": NaN
     },
@@ -329,9 +329,9 @@
         "reference_path": "Streaming > Handling Events",
         "expected_answer": "Applications typically open a streaming connection, process incoming events, append new text to the UI, detect completion, and close the stream.",
         "generated_answer": "Applications typically:\n\n1. Open a streaming connection.  \n2. Process incoming events.  \n3. Append new text to the UI.  \n4. Detect completion.  \n5. Close the stream.",
-        "correctness": NaN,
-        "groundedness": NaN,
-        "hallucination": NaN,
+        "correctness": 5,
+        "groundedness": 5,
+        "hallucination": "no",
         "root_cause": NaN,
         "notes": NaN
     },
@@ -341,9 +341,9 @@
         "reference_path": "Streaming > Common Mistakes",
         "expected_answer": "Assuming the full response arrives in one event, ignoring connection errors, and blocking the UI while waiting for tokens.",
         "generated_answer": "Developers should avoid:\n\n- Assuming the full response arrives in one event.\n- Ignoring connection errors.\n- Blocking the UI while waiting for tokens.",
-        "correctness": NaN,
-        "groundedness": NaN,
-        "hallucination": NaN,
+        "correctness": 4,
+        "groundedness": 5,
+        "hallucination": "no",
         "root_cause": NaN,
         "notes": NaN
     },
@@ -353,9 +353,9 @@
         "reference_path": "Streaming > FAQ > Can streaming be used with RAG?",
         "expected_answer": "Yes. Retrieve relevant context first, then stream the generated answer.",
         "generated_answer": "Yes. Retrieve relevant context first, then stream the generated answer.",
-        "correctness": NaN,
-        "groundedness": NaN,
-        "hallucination": NaN,
+        "correctness": 5,
+        "groundedness": 5,
+        "hallucination": "no",
         "root_cause": NaN,
         "notes": NaN
     }
