@@ -25,7 +25,6 @@ from components.source_panel import render_source_panel
 from components.monitoring import render_monitoring
 from utils.session import initialize_session
 
-
 # ==========================================================
 # Streamlit Configuration
 # ==========================================================
@@ -159,9 +158,11 @@ if (
 
                 latency = time.perf_counter() - start
 
+                request_id = None
+
                 try:
 
-                    log_request(
+                    request_id = log_request(
                         question=question,
                         result=result,
                         latency=latency,
@@ -194,6 +195,7 @@ if (
             "latency": latency,
             "model": model,
             "source_count": len(sources),
+            "request_id": request_id,
         }
     )
 

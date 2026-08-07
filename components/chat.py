@@ -21,6 +21,7 @@ It only renders the UI.
 from __future__ import annotations
 
 import streamlit as st
+from monitoring.logger import save_feedback
 
 
 # ==========================================================
@@ -56,6 +57,46 @@ def render_chat_history() -> None:
                     model=message.get("model"),
                     source_count=message.get("source_count"),
                 )
+
+                request_id = message.get("request_id")
+
+                if request_id:
+
+                    feedback_col1, feedback_col2, _ = st.columns(
+                        [2, 2, 10]
+                    )
+
+                    with feedback_col1:
+
+                        if st.button(
+                            "👍 Helpful",
+                            key=f"up_{request_id}",
+                        ):
+
+                            save_feedback(
+                                request_id,
+                                1,
+                            )
+
+                            st.toast(
+                                "Thanks for your feedback!"
+                            )
+
+                    with feedback_col2:
+
+                        if st.button(
+                            "👎 Not helpful",
+                            key=f"down_{request_id}",
+                        ):
+
+                            save_feedback(
+                                request_id,
+                                -1,
+                            )
+
+                            st.toast(
+                                "Thanks for your feedback!"
+                            )
 
 
 # ==========================================================

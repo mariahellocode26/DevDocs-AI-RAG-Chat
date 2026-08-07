@@ -12,6 +12,8 @@ from monitoring.analytics import (
     get_tokens_over_time,
     get_cost_over_time,
     get_top_documents,
+    get_feedback_counts,
+    get_feedback_rate,
 )
 
 
@@ -24,7 +26,7 @@ def render_monitoring():
     # ==========================================================
     with st.container(border=True):
 
-        col1, col2, col3, col4, col5 = st.columns(5)
+        col1, col2, col3, col4, col5, col6 = st.columns(6)
 
         with col1:
             st.metric(
@@ -54,6 +56,11 @@ def render_monitoring():
             st.metric(
                 "Avg Chunks",
                 get_average_retrieved_chunks(),
+            )
+        with col6:
+            st.metric(
+                "Approval Rate",
+                f"{get_feedback_rate()}%",
             )
 
         st.divider()
@@ -175,6 +182,29 @@ def render_monitoring():
 
         st.markdown("<div style='height: 50px'></div>",
             unsafe_allow_html=True)
+
+        # ==========================================================
+        # Feedback Chart
+        # ==========================================================
+        feedback_data = get_feedback_counts()
+
+        feedback_df = pd.DataFrame(
+            feedback_data,
+            columns=["rating", "count"],
+        )
+
+        feedback_df["rating"] = feedback_df["rating"].map(
+            {
+                1: "👍 Helpful",
+                -1: "👎 Not Helpful",
+            }
+        )
+
+        st.subheader("User feedback")
+
+        st.bar_chart(
+            feedback_df.set_index("rating")
+        )
 
         
 

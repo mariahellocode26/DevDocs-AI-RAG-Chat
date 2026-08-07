@@ -71,3 +71,38 @@ def log_request(question, result, latency):
 
     conn.commit()
     conn.close()
+    return request_id
+
+
+def save_feedback(request_id, rating):
+
+    conn = get_connection()
+
+    with conn.cursor() as cur:
+
+        cur.execute(
+            """
+            INSERT INTO feedback (
+
+                request_id,
+                rating
+
+            )
+
+            VALUES (%s, %s)
+
+            ON CONFLICT (request_id)
+
+            DO UPDATE SET
+
+                rating = EXCLUDED.rating,
+                created_at = NOW()
+            """,
+            (
+                request_id,
+                rating,
+            ),
+        )
+
+    conn.commit()
+    conn.close()

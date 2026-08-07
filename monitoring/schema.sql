@@ -44,7 +44,7 @@ CREATE TABLE feedback (
 
     id SERIAL PRIMARY KEY,
 
-    request_id INTEGER REFERENCES requests(id),
+    request_id INTEGER REFERENCES requests(id) UNIQUE,
 
     rating INTEGER,
 

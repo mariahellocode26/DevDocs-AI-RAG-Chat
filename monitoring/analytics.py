@@ -228,3 +228,56 @@ def get_tokens_over_time():
     conn.close()
 
     return rows
+
+def get_feedback_counts():
+
+    conn = get_connection()
+
+    with conn.cursor() as cur:
+
+        cur.execute(
+            """
+            SELECT
+                rating,
+                COUNT(*)
+            FROM feedback
+            GROUP BY rating
+            """
+        )
+
+        rows = cur.fetchall()
+
+    conn.close()
+
+    return rows
+
+
+
+def get_feedback_rate():
+
+    conn = get_connection()
+
+    with conn.cursor() as cur:
+
+        cur.execute(
+            """
+            SELECT
+
+                COUNT(*) FILTER (WHERE rating = 1),
+                COUNT(*) FILTER (WHERE rating = -1)
+
+            FROM feedback
+            """
+        )
+
+        positive, negative = cur.fetchone()
+
+    conn.close()
+
+    total = positive + negative
+
+    if total == 0:
+
+        return 0
+
+    return round(positive / total * 100, 1)
