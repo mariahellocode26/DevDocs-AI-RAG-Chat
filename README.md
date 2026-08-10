@@ -1,7 +1,11 @@
 # DevDocs-AI-RAG-Chat
 
 <p align="center">
-  <img src="assets/chat-demo.gif" width="85%" alt="Chat Demo">
+  <img
+    src="https://github.com/user-attachments/assets/b566e34c-2943-4a8b-ac23-86f801fe95fe"
+    width="85%"
+    alt="Chat Demo"
+  />
 </p>
 
 <p align="center">
