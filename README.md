@@ -221,6 +221,15 @@ The project includes logging and monitoring with Grafana dashboards.
 - Requests over time
 - Token usage over time
 
+
+<p align="center">
+  <img
+    src="https://github.com/user-attachments/assets/828e0b42-f26b-467e-82c7-e65b92e2b9c2"
+    width="85%"
+    alt="Grafana Monitoring Dashboard"
+  />
+</p>
+
 ---
 
 # Project Structure
