@@ -73,9 +73,8 @@ Content:
 # Build Prompt
 # ============================================================
 
-def build_prompt(question, context):
-
-    prompt = f"""
+PROMPTS = {
+    "baseline": """
 You are an expert assistant for the OpenAI documentation.
 
 Answer the QUESTION using ONLY the CONTEXT below.
@@ -89,9 +88,39 @@ CONTEXT
 QUESTION
 
 {question}
-"""
+""",
 
-    return prompt
+    "strict_grounding": """
+You are an expert assistant for the OpenAI documentation.
+
+Answer the QUESTION using ONLY the information explicitly stated
+in the CONTEXT.
+
+Do not use outside knowledge or make assumptions.
+
+If the answer is not contained in the CONTEXT, say:
+"I don't know based on the provided documentation."
+
+Give a concise and direct answer.
+
+CONTEXT
+
+{context}
+
+QUESTION
+
+{question}
+"""
+}
+
+def build_prompt(question, context, prompt_name="baseline"):
+
+    prompt_template = PROMPTS[prompt_name]
+
+    return prompt_template.format(
+        context=context,
+        question=question,
+    )
 
 
 # ============================================================
@@ -136,7 +165,7 @@ def ask_llm(prompt):
 # RAG
 # ============================================================
 
-def rag(question):
+def rag(question, prompt_name="baseline"):
 
     retrieved_chunks = search(
         query=question,
@@ -145,7 +174,11 @@ def rag(question):
 
     context = build_context(retrieved_chunks)
 
-    prompt = build_prompt(question, context)
+    prompt = build_prompt(
+    question,
+    context,
+    prompt_name=prompt_name,
+    )
 
     llm_result = ask_llm(prompt)
 
@@ -157,6 +190,7 @@ def rag(question):
         "top_k": TOP_K,
         "usage": llm_result["usage"],
         "cost_usd": llm_result["cost_usd"],
+        "prompt": prompt_name,
     }
 
 
