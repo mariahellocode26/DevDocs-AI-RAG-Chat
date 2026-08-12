@@ -113,7 +113,7 @@ QUESTION
 """
 }
 
-def build_prompt(question, context, prompt_name="baseline"):
+def build_prompt(question, context, prompt_name="strict_grounding"):
 
     prompt_template = PROMPTS[prompt_name]
 
@@ -165,7 +165,7 @@ def ask_llm(prompt):
 # RAG
 # ============================================================
 
-def rag(question, prompt_name="baseline"):
+def rag(question, prompt_name="strict_grounding"):
 
     retrieved_chunks = search(
         query=question,
