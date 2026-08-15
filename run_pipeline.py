@@ -1,4 +1,4 @@
-# evaluation/run_pipeline.py
+# run_pipeline.py
 import time
 import sys
 import argparse
